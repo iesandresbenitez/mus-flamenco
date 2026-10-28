@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#FFFCF7">
-  <meta name="description" content="Flamenco STEAM Challenge: ritmo, música, ciencia y retos por equipos para celebrar el Día del Flamenco.">
-  <title>Flamenco STEAM Challenge | Proyecto STEAM 4.0</title>
+  <meta name="description" content="Flamenco en juego: descubre los palos del flamenco, sus compases y ritmos con actividades musicales para 1.º y 2.º de ESO.">
+  <title>Flamenco en juego | Palos y ritmos · Proyecto STEAM 4.0</title>
   <style>
     :root {
       color-scheme: light;
@@ -66,7 +66,7 @@
     .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 18px; margin-bottom: 18px; }
     .section-heading h2 { margin: 5px 0 0; color: var(--granate-oscuro); font-size: clamp(1.45rem, 3vw, 2rem); letter-spacing: -.035em; }
     .section-heading p { max-width: 520px; margin: 0; color: var(--texto-secundario); font-size: 14px; }
-    .mode-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .mode-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
     .mode-card { display: flex; flex-direction: column; align-items: flex-start; min-height: 218px; padding: 22px; border: 1px solid var(--arena); border-radius: var(--radio); background: var(--blanco); box-shadow: var(--sombra); }
     .mode-icon { display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 15px; border-radius: 14px; background: var(--beige); color: var(--granate); font-size: 23px; }
     .mode-card h3 { margin-bottom: 7px; color: var(--granate-oscuro); font-size: 17px; }
@@ -172,19 +172,19 @@
 <body>
   <header class="site-header">
     <div class="header-inner">
-      <a class="brand" href="#inicio" aria-label="Flamenco STEAM Challenge, inicio">
+      <a class="brand" href="#inicio" aria-label="Flamenco en juego, inicio">
         <span class="brand-mark" aria-hidden="true">♫</span>
         <span class="brand-copy">
-          <span class="brand-title">Flamenco STEAM Challenge</span>
-          <span class="brand-subtitle">Proyecto STEAM 4.0 · Código Escuela 4.0</span>
+          <span class="brand-title">Flamenco en juego</span>
+          <span class="brand-subtitle">Palos y ritmos · 1.º y 2.º ESO</span>
         </span>
       </a>
       <div class="header-right">
         <nav class="main-nav" aria-label="Navegación principal">
           <a class="nav-link" href="#inicio" aria-current="page">Inicio</a>
-          <a class="nav-link" href="#compas">Compás</a>
-          <a class="nav-link" href="#steam">Retos STEAM</a>
-          <a class="nav-link" href="#beatmaker">Crea tu ritmo</a>
+          <a class="nav-link" href="#compas">Escucha el compás</a>
+          <a class="nav-link" href="#steam">Explora los palos</a>
+          <a class="nav-link" href="#beatmaker">Crea ritmos</a>
         </nav>
         <div class="score-pill" aria-live="polite"><span aria-hidden="true">✦</span> <span id="header-score">0 puntos</span></div>
       </div>
@@ -194,12 +194,12 @@
   <main id="inicio">
     <section class="hero" aria-labelledby="hero-title">
       <div>
-        <span class="eyebrow">Música · Ciencia · Creatividad</span>
-        <h1 id="hero-title">El arte tiene <em>compás.</em><br>La ciencia también.</h1>
-        <p class="hero-copy">Escucha, experimenta, resuelve retos y crea tu propio ritmo flamenco. ¡Forma equipo y demuestra que aprender puede sonar muy bien!</p>
+        <span class="eyebrow">Flamenco · Ritmo · Experimentación</span>
+        <h1 id="hero-title">Cada palo tiene<br>su <em>propio compás.</em></h1>
+        <p class="hero-copy">Descubre tangos, soleá, bulerías y alegrías. Escucha sus ritmos, sigue los acentos y juega a crear tus propias combinaciones flamencas.</p>
         <div class="hero-actions">
-          <button class="button button-primary" type="button" data-open="compas">▶ Empezar a jugar</button>
-          <button class="button button-secondary" type="button" data-open="steam">Explorar retos STEAM</button>
+          <button class="button button-primary" type="button" data-open="steam">♫ Explorar los palos</button>
+          <button class="button button-secondary" type="button" data-open="beatmaker">Crear un ritmo</button>
         </div>
       </div>
       <div class="hero-art" aria-hidden="true"><div class="vinyl"><div class="vinyl-label">♫</div></div></div>
@@ -207,33 +207,34 @@
 
     <section class="section" aria-labelledby="modes-title">
       <div class="section-heading">
-        <div><span class="eyebrow">Elige tu desafío</span><h2 id="modes-title">Cuatro formas de jugar</h2></div>
-        <p>Completa actividades, suma puntos y descubre cómo se conectan el flamenco y el mundo STEAM.</p>
+        <div><span class="eyebrow">Aprende haciendo</span><h2 id="modes-title">Explora, escucha y crea</h2></div>
+        <p>Actividades musicales pensadas para 1.º y 2.º de ESO. Sin necesidad de saber música previamente.</p>
       </div>
       <div class="mode-grid">
-        <article class="mode-card"><div class="mode-icon" aria-hidden="true">♩</div><h3>El reto del compás</h3><p>Escucha el patrón, marca los pulsos y entrena tu precisión rítmica.</p><button class="text-link" type="button" data-open="compas">Jugar al compás →</button></article>
-        <article class="mode-card"><div class="mode-icon" aria-hidden="true">⚗</div><h3>Laboratorio STEAM</h3><p>Preguntas sobre sonido, matemáticas, instrumentos y cultura flamenca.</p><button class="text-link" type="button" data-open="steam">Resolver retos →</button></article>
-        <article class="mode-card"><div class="mode-icon" aria-hidden="true">♫</div><h3>Crea tu ritmo</h3><p>Combina palmas, cajón, guitarra y zapateado en una secuencia propia.</p><button class="text-link" type="button" data-open="beatmaker">Abrir estudio →</button></article>
+        <article class="mode-card"><div class="mode-icon" aria-hidden="true">🎼</div><h3>Explora los palos</h3><p>Conoce tangos, soleá, bulerías, alegrías y otros estilos, con sus rasgos y compases.</p><button class="text-link" type="button" data-open="steam">Descubrir los palos →</button></article>
+        <article class="mode-card"><div class="mode-icon" aria-hidden="true">◉</div><h3>Sigue el compás</h3><p>Escucha una secuencia, observa los pulsos y localiza dónde cae el acento.</p><button class="text-link" type="button" data-open="compas">Escuchar y marcar →</button></article>
+        <article class="mode-card"><div class="mode-icon" aria-hidden="true">♫</div><h3>Crea tu ritmo</h3><p>Combina palmas, cajón, guitarra y zapateado para experimentar con patrones.</p><button class="text-link" type="button" data-open="beatmaker">Abrir el estudio →</button></article>
+        <article class="mode-card"><div class="mode-icon" aria-hidden="true">✋</div><h3>Prueba los acentos</h3><p>Compara patrones, repite la escucha y descubre cómo cambian las sensaciones.</p><button class="text-link" type="button" data-open="compas">Practicar el ritmo →</button></article>
       </div>
     </section>
 
     <section class="section content-grid" aria-label="Equipos y clasificación">
       <div class="panel">
-        <span class="eyebrow">Modo aula</span><h3>Las peñas participantes</h3>
-        <p class="panel-intro">Personaliza los nombres de los equipos. Los puntos se guardan en este dispositivo.</p>
+        <span class="eyebrow">Para trabajar en clase</span><h3>Aprender en grupo</h3>
+        <p class="panel-intro">Organiza una práctica cooperativa si quieres comparar progresos. Los puntos se guardan en este dispositivo.</p>
         <div id="team-editor">
           <div class="team-row"><div><label for="team-0">Equipo 1</label><input id="team-0" maxlength="32" value="Los Compases"></div><div class="team-score" id="score-0">0 pts</div></div>
           <div class="team-row"><div><label for="team-1">Equipo 2</label><input id="team-1" maxlength="32" value="Los Duendes"></div><div class="team-score" id="score-1">0 pts</div></div>
-          <div class="team-row"><div><label for="team-2">Equipo 3</label><input id="team-2" maxlength="32" value="Flamencos STEAM"></div><div class="team-score" id="score-2">0 pts</div></div>
+          <div class="team-row"><div><label for="team-2">Equipo 3</label><input id="team-2" maxlength="32" value="Los Flamencos"></div><div class="team-score" id="score-2">0 pts</div></div>
         </div>
         <label for="active-team" style="display:block;margin:14px 0 6px;font-size:12px;font-weight:750">Equipo que está jugando</label>
         <select id="active-team" style="width:100%;padding:11px;border:1px solid var(--arena);border-radius:10px;background:var(--marfil);color:var(--texto)">
-          <option value="0">Los Compases</option><option value="1">Los Duendes</option><option value="2">Flamencos STEAM</option>
+          <option value="0">Los Compases</option><option value="1">Los Duendes</option><option value="2">Los Flamencos</option>
         </select>
         <div class="notice"><span aria-hidden="true">ⓘ</span><span>Esta es una demo educativa sin inicio de sesión. Los nombres y puntuaciones son ficticios y se almacenan solo en el navegador.</span></div>
       </div>
       <div class="panel">
-        <span class="eyebrow">Marcador de la clase</span><h3>Clasificación</h3>
+        <span class="eyebrow">Progreso compartido</span><h3>Seguimiento de la clase</h3>
         <p class="panel-intro">La tabla se actualiza con los puntos que consiga cada equipo.</p>
         <div id="leaderboard" class="leaderboard" aria-live="polite"></div>
         <button class="button button-secondary" id="reset-scores" type="button" style="margin-top:17px">Reiniciar puntuaciones</button>
@@ -241,7 +242,7 @@
     </section>
 
     <section class="activity" id="compas" aria-labelledby="compas-title">
-      <div class="activity-header"><div><span class="eyebrow">Música + Matemáticas</span><h2 id="compas-title">El reto del compás</h2><p>Escucha el patrón de 12 pulsos y marca los pulsos fuertes. Cada acierto suma puntos al equipo seleccionado.</p></div><span class="tag">Reto 01</span></div>
+      <div class="activity-header"><div><span class="eyebrow">Escucha activa</span><h2 id="compas-title">Sigue el compás</h2><p>Escucha una secuencia de doce pulsos, sigue el recorrido y señala los acentos que percibes. Es una práctica inicial de escucha, no una grabación de un palo tradicional.</p></div><span class="tag">Ritmo 01</span></div>
       <div class="panel">
         <div class="beat-top"><div class="beat-display">Aciertos de esta ronda: <strong id="beat-hits">0/4</strong></div><button class="button button-secondary" id="play-pattern" type="button">▶ Escuchar patrón</button></div>
         <div class="pulse-grid" id="pulse-grid" aria-label="Patrón rítmico de doce pulsos"></div>
@@ -252,7 +253,7 @@
     </section>
 
     <section class="activity" id="steam" aria-labelledby="steam-title">
-      <div class="activity-header"><div><span class="eyebrow">Ciencia + Tecnología + Arte</span><h2 id="steam-title">Laboratorio STEAM</h2><p>Responde a preguntas sobre el sonido, el ritmo y la cultura flamenca.</p></div><span class="tag">Reto 02</span></div>
+      <div class="activity-header"><div><span class="eyebrow">Guía musical</span><h2 id="steam-title">Explora los palos</h2><p>Conoce cómo se distinguen algunos palos flamencos: compás, carácter, acentos y forma de escucharlos.</p></div><span class="tag">Palos 01</span></div>
       <div class="panel">
         <div class="quiz-meta"><span id="quiz-progress">Pregunta 1 de 6</span><span id="quiz-score">0 puntos en este reto</span></div>
         <h3 class="question" id="quiz-question">¿Qué vibra para producir el sonido de una cuerda de guitarra?</h3>
@@ -263,7 +264,7 @@
     </section>
 
     <section class="activity" id="beatmaker" aria-labelledby="beatmaker-title">
-      <div class="activity-header"><div><span class="eyebrow">Creación musical + Tecnología</span><h2 id="beatmaker-title">Crea tu ritmo flamenco</h2><p>Activa las casillas para construir un patrón. Pulsa reproducir y escucha tu mezcla.</p></div><span class="tag">Reto 03</span></div>
+      <div class="activity-header"><div><span class="eyebrow">Taller de ritmo</span><h2 id="beatmaker-title">Crea y escucha</h2><p>Activa pasos para combinar palmas, cajón, guitarra y zapateado. Prueba varias velocidades y escucha cómo cambia tu patrón.</p></div><span class="tag">Estudio 01</span></div>
       <div class="panel">
         <div class="beat-top"><div class="beat-display">Tempo <strong id="tempo-value">100</strong> BPM</div><label for="tempo" style="font-size:13px;color:var(--texto-secundario)">Velocidad <input id="tempo" type="range" min="60" max="150" value="100" style="accent-color:var(--granate);vertical-align:middle;max-width:140px"></label></div>
         <div class="sequencer" id="sequencer"></div>
@@ -284,12 +285,12 @@
   <script>
     (() => {
       "use strict";
-      const STORAGE_KEY = "flamenco-steam-challenge-v1";
+      const STORAGE_KEY = "flamenco-en-juego-v1";
       const initialState = {
         teams: [
           { name: "Los Compases", score: 0 },
           { name: "Los Duendes", score: 0 },
-          { name: "Flamencos STEAM", score: 0 }
+          { name: "Los Flamencos", score: 0 }
         ],
         activeTeam: 0,
         savedCreation: false
@@ -306,12 +307,12 @@
       let makerSaved = false;
       const $ = (id) => document.getElementById(id);
       const quiz = [
-        { q: "¿Qué vibra para producir el sonido de una cuerda de guitarra?", a: ["La cuerda", "El color de la madera", "El aire quieto", "La púa por sí sola"], correct: 0, explain: "La cuerda vibra y transmite energía al cuerpo de la guitarra, que ayuda a amplificar el sonido." },
-        { q: "¿Qué unidad se utiliza para medir la frecuencia del sonido?", a: ["Metros", "Hercios (Hz)", "Litros", "Gramos"], correct: 1, explain: "La frecuencia se mide en hercios (Hz) y representa cuántas vibraciones ocurren por segundo." },
-        { q: "Si una cuerda vibra más rápido, normalmente escuchamos un sonido…", a: ["Más agudo", "Más grave", "Más largo siempre", "Sin volumen"], correct: 0, explain: "Una frecuencia mayor suele percibirse como un tono más agudo." },
-        { q: "¿Cuántos pulsos tiene un compás tradicional de soleá?", a: ["4", "6", "12", "20"], correct: 2, explain: "La soleá se organiza tradicionalmente en un ciclo de 12 tiempos, con acentos característicos." },
-        { q: "¿Qué disciplina ayuda a estudiar las proporciones y los patrones rítmicos?", a: ["Matemáticas", "Geología solamente", "Astronomía solamente", "Ninguna"], correct: 0, explain: "Las matemáticas permiten describir duraciones, patrones, ciclos y proporciones musicales." },
-        { q: "¿Cuál de estas opciones describe mejor el cajón flamenco?", a: ["Un instrumento de percusión", "Un instrumento de viento", "Un tipo de cuerda", "Un dispositivo de medida"], correct: 0, explain: "El cajón es un instrumento de percusión que se toca golpeando su superficie." }
+        { q: "¿Qué es un palo flamenco?", a: ["Un estilo o forma musical", "Un instrumento de madera", "Un paso de baile único", "Una escala de volumen"], correct: 0, explain: "Cada palo tiene rasgos propios de compás, carácter, melodía y tradición." },
+        { q: "¿Qué palo suele tener un aire vivo y festivo y un compás de cuatro tiempos?", a: ["Tangos", "Soleá", "Seguiriya", "Martinete"], correct: 0, explain: "Los tangos flamencos suelen organizarse en compás binario o de cuatro tiempos y tienen un carácter marcado." },
+        { q: "¿Qué comparten tradicionalmente la soleá y las alegrías?", a: ["La familia de compás de 12 tiempos", "Que siempre son lentas", "Que no llevan acentos", "Que solo se tocan con cajón"], correct: 0, explain: "Soleá y alegrías se basan en ciclos de 12 tiempos, aunque difieren en carácter y velocidad habitual." },
+        { q: "¿Qué palabra ayuda a describir dónde se sienten algunos golpes del compás?", a: ["Acento", "Volumen de pantalla", "Color", "Eco visual"], correct: 0, explain: "Los acentos son pulsos que destacan dentro del patrón rítmico." },
+        { q: "¿Cuál suele asociarse con un carácter especialmente festivo y un compás de 12 tiempos?", a: ["Bulerías", "Soleá", "Tientos", "Tonás"], correct: 0, explain: "Las bulerías se asocian a menudo con un carácter festivo y un ciclo de 12 tiempos; sus acentos requieren práctica auditiva." },
+        { q: "¿Qué te ayuda más a distinguir dos palos?", a: ["Escuchar su compás, acentos y carácter", "Mirar solo el nombre", "Contar siempre hasta cuatro", "Fijarte solo en el volumen"], correct: 0, explain: "El palo no se identifica por un único dato: conviene atender al compás, acentos, melodía, carácter y contexto." }
       ];
       const instruments = [
         { id: "palmas", label: "Palmas", type: "clap" },
