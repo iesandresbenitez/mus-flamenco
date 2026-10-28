@@ -1,13 +1,13 @@
-# Flamenco STEAM Challenge
+# Flamenco en juego — palos y ritmos
 
-Aplicación web educativa para relacionar el flamenco, la música y las disciplinas STEAM mediante retos de ritmo, preguntas interactivas y un creador musical.
+Aplicación educativa para 1.º y 2.º de ESO centrada en conocer los palos del flamenco, escuchar sus compases y acentos y experimentar con patrones rítmicos. La propuesta prioriza aprender escuchando y creando, no completar retos competitivos.
 
 ## Funcionalidades
 
-- **Reto del compás:** escucha un patrón de 12 pulsos, identifica acentos y consigue puntos.
-- **Laboratorio STEAM:** preguntas autocorregibles sobre vibración, frecuencia, matemáticas musicales e instrumentos.
-- **Crea tu ritmo:** secuenciador de ocho pasos con palmas, cajón, guitarra y zapateado. Genera sonidos sintéticos en el navegador mediante Web Audio.
-- **Modo aula:** tres equipos personalizables, selector de equipo activo y clasificación.
+- **Explora los palos:** preguntas interactivas para reconocer tangos, soleá, alegrías, bulerías y conceptos de compás.
+- **Sigue el compás:** escucha una secuencia sintética de doce pulsos y practica la identificación de acentos. No sustituye una grabación real de un palo.
+- **Crea y escucha:** secuenciador de ocho pasos con palmas, cajón, guitarra y zapateado; permite cambiar la velocidad y combinar sonidos.
+- **Modo aula opcional:** tres equipos personalizables, selector de equipo activo y clasificación para actividades cooperativas.
 - **Guardado local:** nombres y puntuaciones en `localStorage`; no hay cuentas ni autenticación.
 - **Diseño adaptable y accesible:** navegación por teclado, foco visible, etiquetas accesibles y respeto por movimiento reducido.
 
@@ -30,7 +30,7 @@ La URL solo estará disponible cuando GitHub Pages se haya activado correctament
 
 ## Identidad visual
 
-La interfaz sigue la guía corporativa STEAM 4.0: granate `#702B3A`, granate oscuro `#4A1D29`, beige `#F3E8D7`, arena `#E1CFB5`, dorado `#C49A6C` y fondo marfil `#FFFCF7`. La cabecera es sticky, con marca a la izquierda, navegación a la derecha y cápsula de puntuación; el pie institucional conserva el texto requerido.
+La interfaz está orientada a alumnado de 1.º y 2.º de ESO y sigue la guía visual corporativa STEAM 4.0: granate `#702B3A`, granate oscuro `#4A1D29`, beige `#F3E8D7`, arena `#E1CFB5`, dorado `#C49A6C` y fondo marfil `#FFFCF7`. La cabecera es sticky, con marca a la izquierda, navegación a la derecha y cápsula de puntuación; el pie institucional conserva el texto requerido.
 
 ## Privacidad y límites de la demo
 
