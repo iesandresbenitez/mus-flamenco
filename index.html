@@ -1,611 +1,92 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#FFFCF7">
-  <meta name="description" content="Flamenco en juego: descubre los palos del flamenco, sus compases y ritmos con actividades musicales para 1.º y 2.º de ESO.">
-  <title>Flamenco en juego | Palos y ritmos · Proyecto STEAM 4.0</title>
-  <style>
-    :root {
-      color-scheme: light;
-      --granate: #702B3A;
-      --granate-oscuro: #4A1D29;
-      --granate-secundario: #8E4A56;
-      --beige: #F3E8D7;
-      --arena: #E1CFB5;
-      --dorado: #C49A6C;
-      --marfil: #FFFCF7;
-      --texto: #35252A;
-      --texto-secundario: #806E68;
-      --blanco: #FFFFFF;
-      --correcto: #286448;
-      --error: #9C303B;
-      --radio: 18px;
-      --sombra: 0 8px 26px rgba(74, 29, 41, .07);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
-    body { margin: 0; background: var(--marfil); color: var(--texto); line-height: 1.55; }
-    button, input { font: inherit; }
-    button { cursor: pointer; }
-    button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid var(--dorado); outline-offset: 3px; }
-    .site-header { position: sticky; top: 0; z-index: 20; background: rgba(255,252,247,.97); border-bottom: 1px solid var(--arena); backdrop-filter: blur(12px); }
-    .header-inner { max-width: 1180px; min-height: 76px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-    .brand { display: flex; align-items: center; gap: 11px; min-width: 0; color: var(--granate-oscuro); text-decoration: none; }
-    .brand-mark { display: grid; place-items: center; flex: 0 0 42px; height: 42px; border-radius: 13px; background: var(--granate); color: var(--marfil); font-size: 21px; }
-    .brand-copy { min-width: 0; }
-    .brand-title { display: block; font-size: 15px; font-weight: 800; letter-spacing: -.025em; line-height: 1.2; }
-    .brand-subtitle { display: block; margin-top: 4px; color: var(--texto-secundario); font-size: 11px; line-height: 1.2; }
-    .header-right { display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
-    .main-nav { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 4px; }
-    .nav-link { display: inline-flex; align-items: center; min-height: 38px; padding: 8px 11px; border-radius: 10px; color: var(--texto-secundario); font-size: 13px; font-weight: 650; text-decoration: none; white-space: nowrap; transition: background .16s ease, color .16s ease; }
-    .nav-link:hover, .nav-link[aria-current="page"] { background: var(--beige); color: var(--granate); }
-    .score-pill { display: inline-flex; align-items: center; gap: 7px; flex-shrink: 0; padding: 8px 12px; border: 1px solid var(--arena); border-radius: 999px; background: var(--beige); color: var(--granate-oscuro); font-size: 12px; font-weight: 800; white-space: nowrap; }
-    main { max-width: 1180px; margin: 0 auto; padding: 34px 24px 52px; }
-    .hero { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(250px, .65fr); gap: 28px; align-items: center; padding: clamp(26px, 5vw, 54px); border: 1px solid var(--arena); border-radius: 26px; background: linear-gradient(115deg, #F3E8D7 0%, #FFFCF7 72%); }
-    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--granate); font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
-    .eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--dorado); }
-    h1, h2, h3, p { margin-top: 0; }
-    h1 { max-width: 680px; margin: 13px 0 16px; color: var(--granate-oscuro); font-size: clamp(2.1rem, 5vw, 4rem); line-height: 1.02; letter-spacing: -.055em; }
-    h1 em { color: var(--granate); font-style: normal; }
-    .hero-copy { max-width: 610px; margin-bottom: 23px; color: var(--texto-secundario); font-size: clamp(15px, 1.8vw, 18px); }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
-    .button { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 44px; padding: 11px 17px; border: 1px solid transparent; border-radius: 12px; font-size: 14px; font-weight: 750; text-decoration: none; transition: transform .16s ease, background .16s ease, border-color .16s ease; }
-    .button:hover { transform: translateY(-1px); }
-    .button-primary { background: var(--granate); color: var(--blanco); }
-    .button-primary:hover { background: var(--granate-oscuro); }
-    .button-secondary { border-color: var(--arena); background: var(--marfil); color: var(--granate); }
-    .button-secondary:hover { background: var(--beige); }
-    .hero-art { display: grid; place-items: center; min-height: 220px; }
-    .vinyl { position: relative; display: grid; place-items: center; width: min(100%, 250px); aspect-ratio: 1; border: 1px solid rgba(112,43,58,.15); border-radius: 50%; background: repeating-radial-gradient(circle at center, #702B3A 0 2px, #652634 3px 5px, #702B3A 6px 8px); box-shadow: 0 18px 34px rgba(74,29,41,.16); transform: rotate(-8deg); }
-    .vinyl::before { content: ""; position: absolute; inset: 16%; border: 1px solid rgba(255,252,247,.23); border-radius: 50%; }
-    .vinyl-label { display: grid; place-items: center; width: 38%; aspect-ratio: 1; border: 5px solid var(--beige); border-radius: 50%; background: var(--dorado); color: var(--granate-oscuro); font-size: 34px; }
-    .section { margin-top: 42px; }
-    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 18px; margin-bottom: 18px; }
-    .section-heading h2 { margin: 5px 0 0; color: var(--granate-oscuro); font-size: clamp(1.45rem, 3vw, 2rem); letter-spacing: -.035em; }
-    .section-heading p { max-width: 520px; margin: 0; color: var(--texto-secundario); font-size: 14px; }
-    .mode-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-    .mode-card { display: flex; flex-direction: column; align-items: flex-start; min-height: 218px; padding: 22px; border: 1px solid var(--arena); border-radius: var(--radio); background: var(--blanco); box-shadow: var(--sombra); }
-    .mode-icon { display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 15px; border-radius: 14px; background: var(--beige); color: var(--granate); font-size: 23px; }
-    .mode-card h3 { margin-bottom: 7px; color: var(--granate-oscuro); font-size: 17px; }
-    .mode-card p { flex: 1; margin-bottom: 18px; color: var(--texto-secundario); font-size: 13px; }
-    .text-link { padding: 0; border: 0; background: transparent; color: var(--granate); font-size: 13px; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
-    .content-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr); gap: 18px; }
-    .panel { padding: 24px; border: 1px solid var(--arena); border-radius: var(--radio); background: var(--blanco); box-shadow: var(--sombra); }
-    .panel h3 { margin-bottom: 6px; color: var(--granate-oscuro); font-size: 19px; }
-    .panel-intro { margin-bottom: 18px; color: var(--texto-secundario); font-size: 13px; }
-    .team-row { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; align-items: center; margin-bottom: 15px; }
-    .team-row label { display: block; margin-bottom: 5px; color: var(--texto); font-size: 12px; font-weight: 750; }
-    .team-row input { width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid var(--arena); border-radius: 10px; background: var(--marfil); color: var(--texto); }
-    .team-score { min-width: 78px; padding: 10px 12px; border-radius: 10px; background: var(--beige); color: var(--granate); text-align: center; font-size: 13px; font-weight: 850; }
-    .leaderboard { display: grid; gap: 9px; }
-    .leader-row { display: grid; grid-template-columns: 30px minmax(0,1fr) auto; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 11px; background: var(--marfil); }
-    .leader-rank { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; background: var(--beige); color: var(--granate); font-size: 12px; font-weight: 850; }
-    .leader-name { overflow-wrap: anywhere; font-size: 13px; font-weight: 750; }
-    .leader-points { color: var(--granate); font-size: 13px; font-weight: 850; white-space: nowrap; }
-    .activity { display: none; margin-top: 28px; scroll-margin-top: 100px; }
-    .activity.active { display: block; animation: appear .2s ease-out; }
-    @keyframes appear { from { opacity: .55; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-    .activity-header { display: flex; justify-content: space-between; align-items: start; gap: 15px; margin-bottom: 18px; }
-    .activity-header h2 { margin: 4px 0 6px; color: var(--granate-oscuro); font-size: clamp(1.5rem,3vw,2rem); }
-    .activity-header p { margin-bottom: 0; color: var(--texto-secundario); font-size: 14px; }
-    .tag { display: inline-flex; align-items: center; padding: 6px 10px; border: 1px solid var(--arena); border-radius: 999px; background: var(--beige); color: var(--granate); font-size: 11px; font-weight: 800; white-space: nowrap; }
-    .beat-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
-    .beat-display { display: flex; align-items: center; gap: 10px; color: var(--texto-secundario); font-size: 13px; }
-    .beat-display strong { color: var(--granate); font-size: 20px; }
-    .pulse-grid { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 7px; margin: 18px 0; }
-    .pulse { display: grid; place-items: center; min-width: 0; aspect-ratio: 1; padding: 0; border: 1px solid var(--arena); border-radius: 10px; background: var(--marfil); color: var(--texto-secundario); font-size: 12px; font-weight: 800; }
-    .pulse.active { border-color: var(--granate); background: var(--granate); color: white; }
-    .pulse.hit { outline: 3px solid rgba(196,154,108,.55); outline-offset: 2px; }
-    .pulse:disabled { cursor: default; opacity: 1; }
-    .feedback { min-height: 26px; margin: 14px 0; color: var(--texto-secundario); font-size: 14px; font-weight: 700; }
-    .feedback.success { color: var(--correcto); }
-    .feedback.error { color: var(--error); }
-    .quiz-options { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
-    .quiz-option { min-height: 48px; padding: 12px 14px; border: 1px solid var(--arena); border-radius: 12px; background: var(--marfil); color: var(--texto); text-align: left; font-size: 14px; font-weight: 650; }
-    .quiz-option:hover:not(:disabled) { border-color: var(--granate-secundario); background: var(--beige); }
-    .quiz-option.correct { border-color: #8AB49C; background: #EAF4ED; color: var(--correcto); }
-    .quiz-option.incorrect { border-color: #D9A3A7; background: #F9EBEC; color: var(--error); }
-    .quiz-option:disabled { cursor: default; }
-    .quiz-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; color: var(--texto-secundario); font-size: 12px; font-weight: 750; }
-    .question { margin-bottom: 18px; color: var(--granate-oscuro); font-size: clamp(1.1rem,2.5vw,1.45rem); line-height: 1.35; }
-    .sequencer { display: grid; gap: 12px; }
-    .instrument-row { display: grid; grid-template-columns: 105px minmax(0,1fr); align-items: center; gap: 12px; }
-    .instrument-label { color: var(--granate-oscuro); font-size: 13px; font-weight: 800; }
-    .steps { display: grid; grid-template-columns: repeat(8,minmax(0,1fr)); gap: 6px; }
-    .step { min-width: 0; aspect-ratio: 1; padding: 0; border: 1px solid var(--arena); border-radius: 8px; background: var(--marfil); }
-    .step.on { border-color: var(--granate); background: var(--granate); box-shadow: inset 0 -3px 0 rgba(74,29,41,.25); }
-    .step.playing { outline: 3px solid var(--dorado); outline-offset: 1px; }
-    .step:focus-visible { outline: 3px solid var(--dorado); }
-    .sequencer-controls { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 20px; }
-    .notice { display: flex; gap: 10px; align-items: start; margin-top: 16px; padding: 12px 14px; border: 1px solid var(--arena); border-radius: 12px; background: var(--beige); color: var(--texto-secundario); font-size: 12px; }
-    .site-footer { border-top: 1px solid var(--arena); background: #F8F0E5; }
-    .footer-inner { max-width: 1180px; margin: 0 auto; padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
-    .footer-text { margin: 0; color: var(--texto-secundario); font-size: 12px; }
-    .footer-label { color: var(--granate); font-size: 11px; font-weight: 800; white-space: nowrap; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
-    @media (max-width: 860px) {
-      .header-inner { align-items: flex-start; flex-direction: column; gap: 10px; padding: 12px 18px; }
-      .header-right { width: 100%; justify-content: space-between; gap: 8px; }
-      .main-nav { justify-content: flex-start; }
-      .nav-link { padding: 8px 9px; }
-      .hero { grid-template-columns: minmax(0,1fr) 190px; gap: 14px; }
-      .vinyl { width: 180px; }
-      .mode-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
-    }
-    @media (max-width: 620px) {
-      html { scroll-padding-top: 145px; }
-      .header-inner { padding: 10px 14px; }
-      .brand-mark { flex-basis: 38px; height: 38px; }
-      .brand-title { font-size: 14px; }
-      .brand-subtitle { font-size: 10px; }
-      .header-right { align-items: flex-start; flex-direction: column; }
-      .main-nav { width: 100%; gap: 3px; }
-      .nav-link { min-height: 36px; padding: 7px 9px; font-size: 12px; }
-      .score-pill { align-self: flex-start; padding: 6px 10px; }
-      main { padding: 20px 14px 38px; }
-      .hero { grid-template-columns: 1fr; padding: 25px 21px; }
-      .hero-art { min-height: auto; }
-      .vinyl { width: 135px; }
-      .vinyl-label { font-size: 23px; border-width: 3px; }
-      .section { margin-top: 32px; }
-      .section-heading { align-items: flex-start; flex-direction: column; }
-      .mode-grid, .content-grid { grid-template-columns: 1fr; }
-      .mode-card { min-height: 0; }
-      .panel { padding: 19px; }
-      .pulse-grid { gap: 4px; }
-      .pulse { border-radius: 7px; font-size: 10px; }
-      .quiz-options { grid-template-columns: 1fr; }
-      .instrument-row { grid-template-columns: 78px minmax(0,1fr); gap: 8px; }
-      .steps { gap: 4px; }
-      .step { border-radius: 6px; }
-      .footer-inner { align-items: flex-start; flex-direction: column; padding: 19px 14px; }
-      .activity-header { flex-direction: column; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#4A1D29">
+<meta name="description" content="Flamenco en juego: explora los palos flamencos, sus compases y ritmos con un simulador musical para 1.º y 2.º de ESO.">
+<title>Flamenco en juego · CompásLab educativo</title>
+<style>
+:root{color-scheme:dark;--wine:#702B3A;--wine-deep:#32171e;--wine-mid:#8E4A56;--gold:#C49A6C;--gold-light:#e4c08d;--cream:#FFFCF7;--sand:#F3E8D7;--ink:#211519;--muted:#c7b6b0;--green:#7fc6a0;--line:rgba(243,232,215,.16);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}body{margin:0;background:var(--ink);color:var(--cream);line-height:1.5}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold-light);outline-offset:3px}button:disabled{opacity:.55;cursor:not-allowed}.site-header{position:sticky;top:0;z-index:10;background:rgba(50,23,30,.97);border-bottom:1px solid rgba(196,154,108,.3);backdrop-filter:blur(14px)}.header-inner{max-width:1240px;margin:auto;padding:12px 24px;min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:12px;color:var(--cream);text-decoration:none}.brand-mark{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:var(--gold);color:var(--wine-deep);font-size:24px;font-weight:900}.brand-title{display:block;font-size:16px;font-weight:850;letter-spacing:-.03em}.brand-subtitle{display:block;color:#d6c2b9;font-size:11px}.nav{display:flex;gap:5px;flex-wrap:wrap}.nav a{padding:9px 12px;border-radius:10px;color:#e6d9d3;text-decoration:none;font-size:13px;font-weight:700}.nav a:hover{background:rgba(243,232,215,.1);color:var(--gold-light)}main{max-width:1240px;margin:auto;padding:28px 24px 54px}.hero{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;padding:30px 32px;border:1px solid var(--line);border-radius:24px;background:radial-gradient(ellipse at 80% 20%,rgba(196,154,108,.15),transparent 35%),linear-gradient(120deg,#3b1b23,#26161a)}.eyebrow{color:var(--gold-light);font-size:11px;font-weight:850;letter-spacing:.14em;text-transform:uppercase}.hero h1{margin:8px 0 10px;font-size:clamp(2rem,4.5vw,3.5rem);line-height:1.04;letter-spacing:-.05em}.hero p{max-width:680px;margin:0;color:#d3c3bd}.hero-mark{display:grid;place-items:center;width:112px;height:112px;border:1px solid rgba(196,154,108,.6);border-radius:50%;color:var(--gold-light);font-size:44px;box-shadow:0 0 0 12px rgba(196,154,108,.06),0 0 0 24px rgba(196,154,108,.03)}
+.section{margin-top:28px}.section-title{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:14px}.section-title h2{margin:3px 0 0;font-size:clamp(1.25rem,2.6vw,1.8rem);letter-spacing:-.03em}.section-title p{max-width:560px;margin:0;color:var(--muted);font-size:13px}.palo-list{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}.palo-button{min-height:90px;padding:14px 10px;border:1px solid var(--line);border-radius:15px;background:#2b1b20;color:var(--cream);text-align:left;transition:transform .15s,border-color .15s,background .15s}.palo-button:hover{transform:translateY(-2px);border-color:var(--gold)}.palo-button[aria-pressed=true]{background:linear-gradient(145deg,#70404a,#42212a);border-color:var(--gold);box-shadow:inset 0 0 0 1px rgba(196,154,108,.25)}.palo-symbol{display:block;color:var(--gold-light);font-size:20px;margin-bottom:5px}.palo-name{display:block;font-weight:800;font-size:14px}.palo-meter{display:block;color:#cbb8b1;font-size:11px;margin-top:2px}.sim-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(310px,.85fr);gap:16px}.panel{min-width:0;padding:22px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(155deg,#2b1b20,#211519);box-shadow:0 14px 40px rgba(0,0,0,.12)}.panel-head{display:flex;align-items:start;justify-content:space-between;gap:12px;margin-bottom:12px}.panel h2,.panel h3{margin:0}.panel h2{font-size:19px}.panel h3{font-size:17px}.panel-sub{margin:5px 0 0;color:var(--muted);font-size:12px}.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid rgba(196,154,108,.35);border-radius:99px;background:rgba(196,154,108,.1);color:var(--gold-light);font-size:11px;font-weight:800;white-space:nowrap}.circle-wrap{position:relative;display:grid;place-items:center;max-width:540px;margin:0 auto}.circle-wrap svg{display:block;width:100%;height:auto;max-height:480px;overflow:visible}.ring{fill:none;stroke:rgba(243,232,215,.13);stroke-width:1.5}.spoke{stroke:rgba(243,232,215,.18);stroke-width:1}.beat-node{fill:#5b4248;stroke:#a68b80;stroke-width:1.5;transition:fill .1s,stroke .1s,transform .1s}.beat-node.strong{fill:var(--gold);stroke:var(--gold-light);stroke-width:2.5}.beat-node.current{fill:#fff0c9;stroke:#fff;stroke-width:4;filter:drop-shadow(0 0 8px rgba(228,192,141,.8))}.beat-label{fill:#f9eee4;font-size:13px;font-weight:800;text-anchor:middle;dominant-baseline:middle;pointer-events:none}.beat-label.strong-label{fill:#2b171d}.pattern-polygon{fill:rgba(196,154,108,.12);stroke:var(--gold-light);stroke-width:2;stroke-linejoin:round;stroke-dasharray:4 4}.circle-center{fill:#3a2027;stroke:rgba(196,154,108,.4);stroke-width:1}.center-small{fill:#cbb8b1;font-size:10px;text-anchor:middle;letter-spacing:1.3px}.center-big{fill:#fff1df;font-size:24px;font-weight:900;text-anchor:middle}.legend{display:flex;flex-wrap:wrap;gap:13px;justify-content:center;color:var(--muted);font-size:11px;margin:0 0 12px}.legend span{display:inline-flex;align-items:center;gap:6px}.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;background:#5b4248;border:1px solid #a68b80}.legend .gold{background:var(--gold);border-color:var(--gold-light)}.current-readout{display:flex;align-items:center;justify-content:center;gap:10px;margin:10px 0 0;color:var(--muted);font-size:13px}.current-readout strong{color:var(--gold-light);font-size:22px;font-variant-numeric:tabular-nums}.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:10px 14px;border:1px solid var(--line);border-radius:11px;background:#3a252b;color:var(--cream);font-size:13px;font-weight:800}.btn:hover{border-color:var(--gold)}.btn-primary{background:var(--gold);border-color:var(--gold);color:#29171c}.btn-primary:hover{background:var(--gold-light)}.btn:active{transform:translateY(1px)}.tempo-row{display:grid;grid-template-columns:auto minmax(100px,1fr) auto;align-items:center;gap:12px;margin-top:17px}.tempo-row label{font-size:12px;color:var(--muted)}.tempo-number{color:var(--gold-light);font-size:21px;font-weight:900;font-variant-numeric:tabular-nums}.tempo-row input{width:100%;accent-color:var(--gold)}.small-select{padding:7px 9px;border:1px solid var(--line);border-radius:9px;background:#211519;color:var(--cream)}.layers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:17px}.layer{display:flex;align-items:center;gap:8px;padding:10px;border:1px solid var(--line);border-radius:10px;background:#24171b;font-size:12px;font-weight:750}.layer input{accent-color:var(--gold);width:17px;height:17px}.volume-row{display:flex;align-items:center;gap:9px;margin-top:12px;color:var(--muted);font-size:12px}.volume-row input{flex:1;min-width:50px;accent-color:var(--gold)}.didactic-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.info-tile{padding:14px;border:1px solid var(--line);border-radius:13px;background:rgba(255,252,247,.025)}.info-tile .tile-label{display:block;margin-bottom:5px;color:var(--gold-light);font-size:10px;font-weight:850;letter-spacing:.1em;text-transform:uppercase}.info-tile p{margin:0;color:#e2d4ce;font-size:13px}.info-tile.wide{grid-column:1/-1}.practice-card{margin-top:14px;padding:15px;border:1px solid rgba(196,154,108,.28);border-radius:14px;background:rgba(196,154,108,.07)}.practice-card p{margin:6px 0 12px;color:#e2d4ce;font-size:13px}.palm-button{width:100%;min-height:76px;border:1px solid var(--gold);border-radius:14px;background:linear-gradient(120deg,#6b3540,#40212a);color:var(--cream);font-size:16px;font-weight:900}.palm-button span{display:block;color:var(--gold-light);font-size:11px;font-weight:600;margin-top:3px}.palm-button.palm-hit{background:var(--gold);color:#29171c;transform:scale(.99)}.palm-button.palm-hit span{color:#493039}.feedback{min-height:22px;margin:9px 0 0;color:var(--muted);font-size:12px}.feedback.good{color:var(--green)}.steam-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.steam-card{padding:18px;border:1px solid var(--line);border-radius:16px;background:#2b1b20}.steam-card .steam-icon{font-size:23px}.steam-card h3{margin:8px 0 6px;font-size:15px;color:var(--gold-light)}.steam-card p{margin:0;color:#d4c2bc;font-size:13px}.quiz-panel{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:14px}.quiz-question{font-size:16px;font-weight:800;margin:6px 0 14px}.quiz-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.quiz-option{min-height:44px;padding:10px 12px;text-align:left;border:1px solid var(--line);border-radius:10px;background:#211519;color:var(--cream);font-size:13px}.quiz-option:hover:not(:disabled){border-color:var(--gold)}.quiz-option.correct{border-color:#5da780;background:#193328}.quiz-option.incorrect{border-color:#b9666d;background:#3d2025}.quiz-option:disabled{cursor:default}.score{color:var(--gold-light);font-size:13px;font-weight:850;white-space:nowrap}.note{margin-top:14px;padding:12px 14px;border-left:3px solid var(--gold);background:rgba(196,154,108,.07);color:var(--muted);font-size:11px}.footer{border-top:1px solid var(--line);background:#1b1114}.footer-inner{max-width:1240px;margin:auto;padding:20px 24px;display:flex;justify-content:space-between;gap:16px;align-items:center}.footer p{margin:0;color:#cbbab4;font-size:11px}.footer strong{color:var(--gold-light);font-size:11px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:980px){.palo-list{grid-template-columns:repeat(3,minmax(0,1fr))}.sim-grid{grid-template-columns:1fr}.circle-wrap svg{max-height:430px}.header-inner{align-items:flex-start;flex-direction:column;gap:10px}.nav{width:100%}.hero-mark{width:85px;height:85px;font-size:34px}}
+@media(max-width:600px){html{scroll-padding-top:135px}.header-inner{padding:10px 14px}.brand-mark{width:38px;height:38px}.nav{gap:2px}.nav a{padding:8px;font-size:11px}main{padding:18px 13px 36px}.hero{grid-template-columns:1fr;padding:23px 20px}.hero-mark{display:none}.section-title{align-items:flex-start;flex-direction:column}.palo-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.palo-button{min-height:78px;padding:11px}.panel{padding:16px}.didactic-grid{grid-template-columns:1fr}.info-tile.wide{grid-column:auto}.layers{grid-template-columns:1fr}.tempo-row{grid-template-columns:auto minmax(70px,1fr) auto;gap:8px}.quiz-panel{grid-template-columns:1fr}.quiz-options{grid-template-columns:1fr}.steam-grid{grid-template-columns:1fr}.footer-inner{align-items:flex-start;flex-direction:column;padding:18px 14px}.controls .btn{flex:1 1 42%}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="brand" href="#inicio" aria-label="Flamenco en juego, inicio">
-        <span class="brand-mark" aria-hidden="true">♫</span>
-        <span class="brand-copy">
-          <span class="brand-title">Flamenco en juego</span>
-          <span class="brand-subtitle">Palos y ritmos · 1.º y 2.º ESO</span>
-        </span>
-      </a>
-      <div class="header-right">
-        <nav class="main-nav" aria-label="Navegación principal">
-          <a class="nav-link" href="#inicio" aria-current="page">Inicio</a>
-          <a class="nav-link" href="#compas">Escucha el compás</a>
-          <a class="nav-link" href="#steam">Explora los palos</a>
-          <a class="nav-link" href="#beatmaker">Crea ritmos</a>
-        </nav>
-        <div class="score-pill" aria-live="polite"><span aria-hidden="true">✦</span> <span id="header-score">0 puntos</span></div>
-      </div>
-    </div>
-  </header>
-
-  <main id="inicio">
-    <section class="hero" aria-labelledby="hero-title">
-      <div>
-        <span class="eyebrow">Flamenco · Ritmo · Experimentación</span>
-        <h1 id="hero-title">Cada palo tiene<br>su <em>propio compás.</em></h1>
-        <p class="hero-copy">Descubre tangos, soleá, bulerías y alegrías. Escucha sus ritmos, sigue los acentos y juega a crear tus propias combinaciones flamencas.</p>
-        <div class="hero-actions">
-          <button class="button button-primary" type="button" data-open="steam">♫ Explorar los palos</button>
-          <button class="button button-secondary" type="button" data-open="beatmaker">Crear un ritmo</button>
-        </div>
-      </div>
-      <div class="hero-art" aria-hidden="true"><div class="vinyl"><div class="vinyl-label">♫</div></div></div>
-    </section>
-
-    <section class="section" aria-labelledby="modes-title">
-      <div class="section-heading">
-        <div><span class="eyebrow">Aprende haciendo</span><h2 id="modes-title">Explora, escucha y crea</h2></div>
-        <p>Actividades musicales pensadas para 1.º y 2.º de ESO. Sin necesidad de saber música previamente.</p>
-      </div>
-      <div class="mode-grid">
-        <article class="mode-card"><div class="mode-icon" aria-hidden="true">🎼</div><h3>Explora los palos</h3><p>Conoce tangos, soleá, bulerías, alegrías y otros estilos, con sus rasgos y compases.</p><button class="text-link" type="button" data-open="steam">Descubrir los palos →</button></article>
-        <article class="mode-card"><div class="mode-icon" aria-hidden="true">◉</div><h3>Sigue el compás</h3><p>Escucha una secuencia, observa los pulsos y localiza dónde cae el acento.</p><button class="text-link" type="button" data-open="compas">Escuchar y marcar →</button></article>
-        <article class="mode-card"><div class="mode-icon" aria-hidden="true">♫</div><h3>Crea tu ritmo</h3><p>Combina palmas, cajón, guitarra y zapateado para experimentar con patrones.</p><button class="text-link" type="button" data-open="beatmaker">Abrir el estudio →</button></article>
-        <article class="mode-card"><div class="mode-icon" aria-hidden="true">✋</div><h3>Prueba los acentos</h3><p>Compara patrones, repite la escucha y descubre cómo cambian las sensaciones.</p><button class="text-link" type="button" data-open="compas">Practicar el ritmo →</button></article>
-      </div>
-    </section>
-
-    <section class="section content-grid" aria-label="Equipos y clasificación">
-      <div class="panel">
-        <span class="eyebrow">Para trabajar en clase</span><h3>Aprender en grupo</h3>
-        <p class="panel-intro">Organiza una práctica cooperativa si quieres comparar progresos. Los puntos se guardan en este dispositivo.</p>
-        <div id="team-editor">
-          <div class="team-row"><div><label for="team-0">Equipo 1</label><input id="team-0" maxlength="32" value="Los Compases"></div><div class="team-score" id="score-0">0 pts</div></div>
-          <div class="team-row"><div><label for="team-1">Equipo 2</label><input id="team-1" maxlength="32" value="Los Duendes"></div><div class="team-score" id="score-1">0 pts</div></div>
-          <div class="team-row"><div><label for="team-2">Equipo 3</label><input id="team-2" maxlength="32" value="Los Flamencos"></div><div class="team-score" id="score-2">0 pts</div></div>
-        </div>
-        <label for="active-team" style="display:block;margin:14px 0 6px;font-size:12px;font-weight:750">Equipo que está jugando</label>
-        <select id="active-team" style="width:100%;padding:11px;border:1px solid var(--arena);border-radius:10px;background:var(--marfil);color:var(--texto)">
-          <option value="0">Los Compases</option><option value="1">Los Duendes</option><option value="2">Los Flamencos</option>
-        </select>
-        <div class="notice"><span aria-hidden="true">ⓘ</span><span>Esta es una demo educativa sin inicio de sesión. Los nombres y puntuaciones son ficticios y se almacenan solo en el navegador.</span></div>
-      </div>
-      <div class="panel">
-        <span class="eyebrow">Progreso compartido</span><h3>Seguimiento de la clase</h3>
-        <p class="panel-intro">La tabla se actualiza con los puntos que consiga cada equipo.</p>
-        <div id="leaderboard" class="leaderboard" aria-live="polite"></div>
-        <button class="button button-secondary" id="reset-scores" type="button" style="margin-top:17px">Reiniciar puntuaciones</button>
-      </div>
-    </section>
-
-    <section class="activity" id="compas" aria-labelledby="compas-title">
-      <div class="activity-header"><div><span class="eyebrow">Escucha activa</span><h2 id="compas-title">Sigue el compás</h2><p>Escucha una secuencia de doce pulsos, sigue el recorrido y señala los acentos que percibes. Es una práctica inicial de escucha, no una grabación de un palo tradicional.</p></div><span class="tag">Ritmo 01</span></div>
-      <div class="panel">
-        <div class="beat-top"><div class="beat-display">Aciertos de esta ronda: <strong id="beat-hits">0/4</strong></div><button class="button button-secondary" id="play-pattern" type="button">▶ Escuchar patrón</button></div>
-        <div class="pulse-grid" id="pulse-grid" aria-label="Patrón rítmico de doce pulsos"></div>
-        <p class="panel-intro">Selecciona los pulsos que crees que llevan el acento y pulsa «Comprobar». Puedes volver a escuchar el patrón.</p>
-        <div class="sequencer-controls"><button class="button button-primary" id="check-beat" type="button">Comprobar respuesta</button><button class="button button-secondary" id="new-beat" type="button">Nuevo patrón</button></div>
-        <p class="feedback" id="beat-feedback" role="status" aria-live="polite">¡Prepárate para escuchar!</p>
-      </div>
-    </section>
-
-    <section class="activity" id="steam" aria-labelledby="steam-title">
-      <div class="activity-header"><div><span class="eyebrow">Guía musical</span><h2 id="steam-title">Explora los palos</h2><p>Conoce cómo se distinguen algunos palos flamencos: compás, carácter, acentos y forma de escucharlos.</p></div><span class="tag">Palos 01</span></div>
-      <div class="panel">
-        <div class="quiz-meta"><span id="quiz-progress">Pregunta 1 de 6</span><span id="quiz-score">0 puntos en este reto</span></div>
-        <h3 class="question" id="quiz-question">¿Qué vibra para producir el sonido de una cuerda de guitarra?</h3>
-        <div class="quiz-options" id="quiz-options"></div>
-        <p class="feedback" id="quiz-feedback" role="status" aria-live="polite">Elige una respuesta.</p>
-        <div class="sequencer-controls"><button class="button button-secondary" id="next-question" type="button" disabled>Siguiente pregunta →</button><button class="button button-secondary" id="restart-quiz" type="button">Volver a empezar</button></div>
-      </div>
-    </section>
-
-    <section class="activity" id="beatmaker" aria-labelledby="beatmaker-title">
-      <div class="activity-header"><div><span class="eyebrow">Taller de ritmo</span><h2 id="beatmaker-title">Crea y escucha</h2><p>Activa pasos para combinar palmas, cajón, guitarra y zapateado. Prueba varias velocidades y escucha cómo cambia tu patrón.</p></div><span class="tag">Estudio 01</span></div>
-      <div class="panel">
-        <div class="beat-top"><div class="beat-display">Tempo <strong id="tempo-value">100</strong> BPM</div><label for="tempo" style="font-size:13px;color:var(--texto-secundario)">Velocidad <input id="tempo" type="range" min="60" max="150" value="100" style="accent-color:var(--granate);vertical-align:middle;max-width:140px"></label></div>
-        <div class="sequencer" id="sequencer"></div>
-        <div class="sequencer-controls"><button class="button button-primary" id="play-beat" type="button">▶ Reproducir</button><button class="button button-secondary" id="stop-beat" type="button">■ Parar</button><button class="button button-secondary" id="clear-beat" type="button">Limpiar patrón</button><button class="button button-secondary" id="save-beat" type="button">Guardar mi creación (+10 pts)</button></div>
-        <p class="feedback" id="maker-feedback" role="status" aria-live="polite">Activa las casillas para empezar a componer.</p>
-        <div class="notice"><span aria-hidden="true">♫</span><span>Los sonidos sintéticos se generan en el navegador con Web Audio; no se necesita descargar audio ni utilizar canciones comerciales.</span></div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <p class="footer-text">Aplicación desarrollada en el marco del Proyecto STEAM 4.0 / Programa de Cooperación Territorial Código Escuela 4.0</p>
-      <span class="footer-label">Aprender · Crear · Compartir</span>
-    </div>
-  </footer>
-
-  <script>
-    (() => {
-      "use strict";
-      const STORAGE_KEY = "flamenco-en-juego-v1";
-      const initialState = {
-        teams: [
-          { name: "Los Compases", score: 0 },
-          { name: "Los Duendes", score: 0 },
-          { name: "Los Flamencos", score: 0 }
-        ],
-        activeTeam: 0,
-        savedCreation: false
-      };
-      let state = loadState();
-      let audioContext = null;
-      let playTimer = null;
-      let quizIndex = 0;
-      let quizPoints = 0;
-      let answered = false;
-      let beatPattern = [];
-      let beatSelection = new Set();
-      let beatDone = false;
-      let makerSaved = false;
-      const $ = (id) => document.getElementById(id);
-      const quiz = [
-        { q: "¿Qué es un palo flamenco?", a: ["Un estilo o forma musical", "Un instrumento de madera", "Un paso de baile único", "Una escala de volumen"], correct: 0, explain: "Cada palo tiene rasgos propios de compás, carácter, melodía y tradición." },
-        { q: "¿Qué palo suele tener un aire vivo y festivo y un compás de cuatro tiempos?", a: ["Tangos", "Soleá", "Seguiriya", "Martinete"], correct: 0, explain: "Los tangos flamencos suelen organizarse en compás binario o de cuatro tiempos y tienen un carácter marcado." },
-        { q: "¿Qué comparten tradicionalmente la soleá y las alegrías?", a: ["La familia de compás de 12 tiempos", "Que siempre son lentas", "Que no llevan acentos", "Que solo se tocan con cajón"], correct: 0, explain: "Soleá y alegrías se basan en ciclos de 12 tiempos, aunque difieren en carácter y velocidad habitual." },
-        { q: "¿Qué palabra ayuda a describir dónde se sienten algunos golpes del compás?", a: ["Acento", "Volumen de pantalla", "Color", "Eco visual"], correct: 0, explain: "Los acentos son pulsos que destacan dentro del patrón rítmico." },
-        { q: "¿Cuál suele asociarse con un carácter especialmente festivo y un compás de 12 tiempos?", a: ["Bulerías", "Soleá", "Tientos", "Tonás"], correct: 0, explain: "Las bulerías se asocian a menudo con un carácter festivo y un ciclo de 12 tiempos; sus acentos requieren práctica auditiva." },
-        { q: "¿Qué te ayuda más a distinguir dos palos?", a: ["Escuchar su compás, acentos y carácter", "Mirar solo el nombre", "Contar siempre hasta cuatro", "Fijarte solo en el volumen"], correct: 0, explain: "El palo no se identifica por un único dato: conviene atender al compás, acentos, melodía, carácter y contexto." }
-      ];
-      const instruments = [
-        { id: "palmas", label: "Palmas", type: "clap" },
-        { id: "cajon", label: "Cajón", type: "kick" },
-        { id: "guitarra", label: "Guitarra", type: "pluck" },
-        { id: "zapateado", label: "Zapateado", type: "tap" }
-      ];
-      const pattern = {
-        palmas: [0,2,4,6],
-        cajon: [0,4],
-        guitarra: [2,6],
-        zapateado: [3,7]
-      };
-      function loadState() {
-        try {
-          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-          if (saved && Array.isArray(saved.teams) && saved.teams.length === 3) {
-            return { ...initialState, ...saved, teams: saved.teams.map((team, i) => ({ name: String(team.name || initialState.teams[i].name).slice(0,32), score: Math.max(0, Number(team.score) || 0) })) };
-          }
-        } catch (_) { /* almacenamiento no disponible: la app sigue funcionando en memoria */ }
-        return JSON.parse(JSON.stringify(initialState));
-      }
-      function saveState() {
-        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_) { /* modo privado o almacenamiento bloqueado */ }
-      }
-      function escapeHTML(value) {
-        return String(value).replace(/[&<>"']/g, (ch) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[ch]));
-      }
-      function updateScoreboard() {
-        state.teams.forEach((team, i) => {
-          $("team-" + i).value = team.name;
-          $("score-" + i).textContent = team.score + " pts";
-        });
-        $("active-team").value = String(state.activeTeam);
-        $("active-team").querySelectorAll("option").forEach((option, i) => option.textContent = state.teams[i].name);
-        const total = state.teams.reduce((sum, team) => sum + team.score, 0);
-        $("header-score").textContent = total + (total === 1 ? " punto" : " puntos");
-        const sorted = state.teams.map((team, index) => ({ ...team, index })).sort((a,b) => b.score - a.score);
-        $("leaderboard").innerHTML = sorted.map((team, rank) => '<div class="leader-row"><span class="leader-rank">' + (rank + 1) + '</span><span class="leader-name">' + escapeHTML(team.name) + '</span><span class="leader-points">' + team.score + ' pts</span></div>').join("");
-        saveState();
-      }
-      function awardPoints(points, message) {
-        state.teams[state.activeTeam].score += points;
-        updateScoreboard();
-        if (message) message.textContent = "+" + points + " puntos para " + state.teams[state.activeTeam].name + ".";
-      }
-      function openActivity(id) {
-        document.querySelectorAll(".activity").forEach(section => section.classList.toggle("active", section.id === id));
-        document.querySelectorAll(".nav-link").forEach(link => {
-          const active = link.getAttribute("href") === "#" + id || (id === "inicio" && link.getAttribute("href") === "#inicio");
-          if (active) link.setAttribute("aria-current", "page"); else link.removeAttribute("aria-current");
-        });
-        if (id !== "inicio") $(id).scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
-      }
-      document.querySelectorAll("[data-open]").forEach(button => button.addEventListener("click", () => openActivity(button.dataset.open)));
-      document.querySelectorAll(".nav-link").forEach(link => link.addEventListener("click", () => {
-        const id = link.getAttribute("href").slice(1);
-        if (id === "inicio") document.querySelectorAll(".activity").forEach(section => section.classList.remove("active"));
-        else openActivity(id);
-      }));
-      for (let i = 0; i < 3; i++) {
-        $("team-" + i).addEventListener("change", event => {
-          state.teams[i].name = event.target.value.trim().slice(0,32) || initialState.teams[i].name;
-          updateScoreboard();
-        });
-      }
-      $("active-team").addEventListener("change", event => { state.activeTeam = Number(event.target.value) || 0; saveState(); });
-      $("reset-scores").addEventListener("click", () => {
-        if (!window.confirm("¿Quieres reiniciar las puntuaciones de los tres equipos?")) return;
-        state.teams.forEach(team => team.score = 0);
-        state.savedCreation = false;
-        makerSaved = false;
-        updateScoreboard();
-      });
-
-      function getAudio() {
-        if (!audioContext) {
-          const AudioCtor = window.AudioContext || window.webkitAudioContext;
-          if (!AudioCtor) return null;
-          audioContext = new AudioCtor();
-        }
-        if (audioContext.state === "suspended") audioContext.resume();
-        return audioContext;
-      }
-      function tone(type, time) {
-        const ctx = getAudio();
-        if (!ctx) return;
-        const now = time ?? ctx.currentTime;
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        const settings = {
-          clap: { freq: 1500, end: 500, duration: .075, wave: "triangle", volume: .24 },
-          kick: { freq: 130, end: 48, duration: .16, wave: "sine", volume: .45 },
-          pluck: { freq: 660, end: 220, duration: .22, wave: "triangle", volume: .22 },
-          tap: { freq: 360, end: 100, duration: .09, wave: "square", volume: .18 }
-        }[type] || { freq: 440, end: 220, duration: .12, wave: "sine", volume: .2 };
-        osc.type = settings.wave;
-        osc.frequency.setValueAtTime(settings.freq, now);
-        osc.frequency.exponentialRampToValueAtTime(Math.max(1, settings.end), now + settings.duration);
-        gain.gain.setValueAtTime(settings.volume, now);
-        gain.gain.exponentialRampToValueAtTime(.001, now + settings.duration);
-        osc.start(now); osc.stop(now + settings.duration + .02);
-      }
-
-      function newPattern() {
-        beatPattern = [];
-        while (beatPattern.length < 4) { const candidate = Math.floor(Math.random() * 12); if (!beatPattern.includes(candidate)) beatPattern.push(candidate); }
-        beatPattern.sort((a, b) => a - b);
-        beatSelection.clear(); beatDone = false;
-        $("pulse-grid").innerHTML = "";
-        for (let i = 0; i < 12; i++) {
-          const button = document.createElement("button");
-          button.type = "button"; button.className = "pulse"; button.textContent = String(i + 1);
-          button.setAttribute("aria-label", "Pulso " + (i + 1));
-          button.setAttribute("aria-pressed", "false");
-          button.addEventListener("click", () => {
-            if (beatDone) return;
-            if (beatSelection.has(i)) beatSelection.delete(i); else beatSelection.add(i);
-            button.classList.toggle("active", beatSelection.has(i));
-            button.setAttribute("aria-pressed", String(beatSelection.has(i)));
-          });
-          $("pulse-grid").appendChild(button);
-        }
-        $("beat-hits").textContent = "0/4";
-        $("beat-feedback").className = "feedback";
-        $("beat-feedback").textContent = "Escucha el patrón y marca los cuatro pulsos destacados.";
-        $("check-beat").disabled = false;
-      }
-      $("play-pattern").addEventListener("click", () => {
-        const ctx = getAudio();
-        if (!ctx) { $("beat-feedback").textContent = "Tu navegador no permite generar audio. Puedes continuar con los retos visuales."; return; }
-        const start = ctx.currentTime + .08;
-        for (let i = 0; i < 12; i++) {
-          const time = start + i * .34;
-          tone(beatPattern.includes(i) ? "clap" : "tap", time);
-          const cell = $("pulse-grid").children[i];
-          setTimeout(() => { cell.classList.add("hit"); setTimeout(() => cell.classList.remove("hit"), 130); }, Math.max(0, (time - ctx.currentTime) * 1000));
-        }
-      });
-      $("check-beat").addEventListener("click", () => {
-        if (beatDone) return;
-        const hits = beatPattern.filter(i => beatSelection.has(i)).length;
-        const falseHits = [...beatSelection].filter(i => !beatPattern.includes(i)).length;
-        const score = Math.max(0, hits * 5 - falseHits * 2);
-        $("beat-hits").textContent = hits + "/4";
-        beatDone = true;
-        $("check-beat").disabled = true;
-        $("pulse-grid").querySelectorAll("button").forEach((button, i) => {
-          button.disabled = true;
-          if (beatPattern.includes(i)) button.classList.add("hit");
-        });
-        if (hits === 4 && falseHits === 0) {
-          $("beat-feedback").className = "feedback success";
-          $("beat-feedback").textContent = "¡Compás perfecto! Has identificado los cuatro acentos.";
-        } else {
-          $("beat-feedback").className = "feedback";
-          $("beat-feedback").textContent = "Buen intento. Has identificado " + hits + " de los 4 acentos. ¡Prueba otro patrón!";
-        }
-        if (score > 0) awardPoints(score);
-      });
-      $("new-beat").addEventListener("click", newPattern);
-
-      function renderQuestion() {
-        answered = false;
-        const item = quiz[quizIndex];
-        $("quiz-progress").textContent = "Pregunta " + (quizIndex + 1) + " de " + quiz.length;
-        $("quiz-score").textContent = quizPoints + " puntos en este reto";
-        $("quiz-question").textContent = item.q;
-        $("quiz-options").innerHTML = "";
-        $("quiz-feedback").className = "feedback";
-        $("quiz-feedback").textContent = "Elige una respuesta.";
-        $("next-question").disabled = true;
-        item.a.forEach((answer, index) => {
-          const button = document.createElement("button");
-          button.type = "button"; button.className = "quiz-option"; button.textContent = answer;
-          button.addEventListener("click", () => answerQuestion(index));
-          $("quiz-options").appendChild(button);
-        });
-      }
-      function answerQuestion(index) {
-        if (answered) return;
-        answered = true;
-        const item = quiz[quizIndex];
-        const buttons = [...$("quiz-options").querySelectorAll("button")];
-        buttons.forEach((button, i) => {
-          button.disabled = true;
-          if (i === item.correct) button.classList.add("correct");
-          else if (i === index) button.classList.add("incorrect");
-        });
-        if (index === item.correct) {
-          quizPoints += 10;
-          awardPoints(10);
-          $("quiz-feedback").className = "feedback success";
-          $("quiz-feedback").textContent = "¡Correcto! " + item.explain;
-        } else {
-          $("quiz-feedback").className = "feedback error";
-          $("quiz-feedback").textContent = "No exactamente. " + item.explain;
-        }
-        $("quiz-score").textContent = quizPoints + " puntos en este reto";
-        $("next-question").disabled = false;
-        $("next-question").textContent = quizIndex === quiz.length - 1 ? "Ver resultado final →" : "Siguiente pregunta →";
-      }
-      $("next-question").addEventListener("click", () => {
-        if (!answered) return;
-        if (quizIndex < quiz.length - 1) { quizIndex++; renderQuestion(); }
-        else {
-          $("quiz-question").textContent = "¡Reto completado!";
-          $("quiz-options").innerHTML = "";
-          $("quiz-feedback").className = "feedback success";
-          $("quiz-feedback").textContent = "Has conseguido " + quizPoints + " de " + (quiz.length * 10) + " puntos posibles. ¡Sigue explorando!";
-          $("quiz-progress").textContent = "Reto completado";
-          $("next-question").disabled = true;
-        }
-      });
-      $("restart-quiz").addEventListener("click", () => { quizIndex = 0; quizPoints = 0; renderQuestion(); });
-
-      function buildSequencer() {
-        $("sequencer").innerHTML = "";
-        instruments.forEach(instrument => {
-          const row = document.createElement("div"); row.className = "instrument-row";
-          const label = document.createElement("span"); label.className = "instrument-label"; label.textContent = instrument.label;
-          const steps = document.createElement("div"); steps.className = "steps";
-          for (let i = 0; i < 8; i++) {
-            const button = document.createElement("button");
-            button.type = "button"; button.className = "step";
-            button.setAttribute("aria-label", instrument.label + ", paso " + (i + 1));
-            button.setAttribute("aria-pressed", "false");
-            if (pattern[instrument.id].includes(i)) { button.classList.add("on"); button.setAttribute("aria-pressed", "true"); }
-            button.addEventListener("click", () => {
-              if (button.classList.contains("on")) { button.classList.remove("on"); button.setAttribute("aria-pressed", "false"); }
-              else { button.classList.add("on"); button.setAttribute("aria-pressed", "true"); }
-              makerSaved = false;
-            });
-            steps.appendChild(button);
-          }
-          row.append(label, steps); $("sequencer").appendChild(row);
-        });
-      }
-      $("tempo").addEventListener("input", event => $("tempo-value").textContent = event.target.value);
-      $("play-beat").addEventListener("click", () => {
-        stopPlayback();
-        const ctx = getAudio();
-        if (!ctx) { $("maker-feedback").textContent = "Tu navegador no permite generar audio. Prueba con un navegador actualizado."; return; }
-        const stepMs = 60000 / Number($("tempo").value) / 2;
-        const rows = [...$("sequencer").querySelectorAll(".instrument-row")];
-        const allButtons = [...$("sequencer").querySelectorAll(".step")];
-        let step = 0;
-        $("maker-feedback").textContent = "¡Está sonando tu creación!";
-        function tick() {
-          allButtons.forEach(button => button.classList.remove("playing"));
-          rows.forEach((row, rowIndex) => {
-            const button = row.querySelectorAll(".step")[step];
-            button.classList.add("playing");
-            if (button.classList.contains("on")) tone(instruments[rowIndex].type);
-          });
-          step = (step + 1) % 8;
-        }
-        tick();
-        playTimer = window.setInterval(tick, stepMs);
-        $("play-beat").disabled = true;
-      });
-      function stopPlayback() {
-        if (playTimer !== null) window.clearInterval(playTimer);
-        playTimer = null;
-        $("play-beat").disabled = false;
-        $("sequencer").querySelectorAll(".step").forEach(button => button.classList.remove("playing"));
-      }
-      $("stop-beat").addEventListener("click", () => { stopPlayback(); $("maker-feedback").textContent = "Reproducción detenida."; });
-      $("clear-beat").addEventListener("click", () => {
-        stopPlayback();
-        $("sequencer").querySelectorAll(".step").forEach(button => { button.classList.remove("on"); button.setAttribute("aria-pressed", "false"); });
-        makerSaved = false;
-        $("maker-feedback").textContent = "Patrón limpio. ¡Crea uno nuevo!";
-      });
-      $("save-beat").addEventListener("click", () => {
-        if (makerSaved) { $("maker-feedback").textContent = "Esta creación ya se ha puntuado. Cambia el patrón para volver a guardarlo."; return; }
-        const count = $("sequencer").querySelectorAll(".step.on").length;
-        if (!count) { $("maker-feedback").className = "feedback error"; $("maker-feedback").textContent = "Activa al menos una casilla antes de guardar."; return; }
-        makerSaved = true;
-        awardPoints(10);
-        $("maker-feedback").className = "feedback success";
-        $("maker-feedback").textContent = "¡Creación guardada! +10 puntos para tu equipo. Has activado " + count + " pasos.";
-      });
-      $("sequencer").addEventListener("click", event => {
-        if (event.target.matches(".step")) $("maker-feedback").className = "feedback";
-      });
-
-      updateScoreboard();
-      newPattern();
-      renderQuestion();
-      buildSequencer();
-    })();
-  </script>
+<header class="site-header"><div class="header-inner">
+<a class="brand" href="#inicio" aria-label="Flamenco en juego, inicio"><span class="brand-mark" aria-hidden="true">♫</span><span><span class="brand-title">Flamenco en juego</span><span class="brand-subtitle">Laboratorio de palos y compases · 1.º y 2.º ESO</span></span></a>
+<nav class="nav" aria-label="Navegación principal"><a href="#palos">Palos</a><a href="#simulador">Compás circular</a><a href="#ficha">Ficha didáctica</a><a href="#steam">STEAM</a><a href="#practica">Practica y juega</a></nav>
+</div></header>
+<main id="inicio">
+<section class="hero"><div><span class="eyebrow">Escucha · Cuenta · Siente · Crea</span><h1>Cada palo tiene<br><span style="color:var(--gold-light)">su propio compás.</span></h1><p>Explora seis palos flamencos, observa cómo se organizan sus pulsos y prueba a seguirlos con el oído, las manos y la tecnología. Los sonidos de este laboratorio son sintéticos: sirven para practicar el ritmo, no sustituyen una interpretación flamenca real.</p></div><div class="hero-mark" aria-hidden="true">♩</div></section>
+<section class="section" id="palos"><div class="section-title"><div><span class="eyebrow">01 · Elige una ruta</span><h2>Explora los palos</h2></div><p>Selecciona un estilo para actualizar el círculo, el patrón de acentos, la ficha y el metrónomo.</p></div><div class="palo-list" id="palo-list" role="group" aria-label="Seleccionar palo flamenco"></div></section>
+<section class="section" id="simulador"><div class="section-title"><div><span class="eyebrow">02 · Mira el ritmo</span><h2 id="sim-title">Compás circular · Soleá</h2></div><p>El dorado señala los acentos orientativos; el punto claro indica el pulso que está sonando.</p></div>
+<div class="sim-grid"><article class="panel"><div class="panel-head"><div><h2 id="circle-heading">Soleá</h2><p class="panel-sub" id="circle-sub">Ciclo de 12 tiempos</p></div><span class="pill" id="meter-pill">12 tiempos</span></div>
+<div class="circle-wrap"><svg id="compass-svg" viewBox="0 0 420 420" role="img" aria-labelledby="svg-title svg-desc"><title id="svg-title">Compás circular</title><desc id="svg-desc">Diagrama dinámico de los tiempos y acentos del palo seleccionado.</desc><circle class="ring" cx="210" cy="210" r="137"/><g id="polygon-layer"></g><g id="spokes-layer"></g><g id="nodes-layer"></g><circle class="circle-center" cx="210" cy="210" r="58"/><text class="center-small" x="210" y="198">PULSO</text><text class="center-big" x="210" y="226" id="svg-count">12</text></svg></div>
+<div class="legend"><span><i class="gold"></i>Acento principal (orientativo)</span><span><i></i>Tiempo sin acento principal</span><span><i style="background:#fff0c9;border-color:#fff"></i>Tiempo actual</span></div>
+<div class="current-readout"><span>Tiempo actual</span><strong id="current-beat">—</strong><span id="bar-count">· listo para empezar</span></div>
+<div class="controls"><button class="btn btn-primary" id="play" type="button">▶ Reproducir</button><button class="btn" id="pause" type="button" disabled>Ⅱ Pausar</button><button class="btn" id="restart" type="button">↺ Reiniciar compás</button></div>
+<div class="tempo-row"><label for="tempo">Tempo</label><input id="tempo" type="range" min="50" max="180" value="90"><output class="tempo-number" id="tempo-output" for="tempo">90 BPM</output></div>
+<div class="layers" aria-label="Capas sonoras"><label class="layer"><input id="layer-palmas" type="checkbox" checked> ✋ Palmas</label><label class="layer"><input id="layer-cajon" type="checkbox" checked> ▣ Cajón</label><label class="layer"><input id="layer-guitarra" type="checkbox"> ♫ Guitarra sintética</label></div>
+<div class="volume-row"><label for="volume">Volumen</label><input id="volume" type="range" min="0" max="100" value="65"><output id="volume-output">65 %</output></div>
+<p class="note">No se cargan grabaciones externas. Palmas, cajón y guitarra son timbres sencillos generados en el navegador. Los acentos del flamenco admiten variantes según el estilo, el intérprete y el contexto.</p>
+</article>
+<aside class="panel" id="ficha"><div class="panel-head"><div><span class="eyebrow">03 · Comprende</span><h2 id="fact-title">Soleá</h2><p class="panel-sub">Ficha rápida para aprender a escuchar</p></div><span class="pill" id="fact-family">Compás de 12</span></div>
+<div class="didactic-grid"><div class="info-tile"><span class="tile-label">Estructura métrica</span><p id="fact-meter"></p></div><div class="info-tile"><span class="tile-label">Acentos guía</span><p id="fact-accents"></p></div><div class="info-tile"><span class="tile-label">Tempo orientativo</span><p id="fact-tempo"></p></div><div class="info-tile"><span class="tile-label">Contexto</span><p id="fact-origin"></p></div><div class="info-tile wide"><span class="tile-label">Cómo reconocerlo</span><p id="fact-listen"></p></div></div>
+<div class="practice-card"><span class="eyebrow">Pista de práctica</span><p id="fact-tip"></p><button class="btn" id="hear-example" type="button">▶ Escuchar un ciclo de ejemplo</button></div></aside></div></section>
+<section class="section" id="practica"><div class="section-title"><div><span class="eyebrow">04 · Entrena oído y manos</span><h2>Practica y juega</h2></div><p>Marca el pulso en tiempo real o comprueba si reconoces la familia métrica. Puedes usar el ratón, la pantalla táctil o la barra espaciadora.</p></div>
+<div class="sim-grid"><article class="panel"><h2>Marca las palmas</h2><p class="panel-sub">Pulsa al escuchar el ritmo. Cada palmada deja una señal visual y aumenta tu contador.</p><button class="palm-button" id="palm-hit" type="button">👏 ¡Marcar una palmada!<span>También puedes usar la barra espaciadora</span></button><p class="feedback" id="palm-feedback" role="status" aria-live="polite">Palmadas marcadas: <strong id="palm-count">0</strong></p><div class="controls"><button class="btn" id="reset-palms" type="button">Reiniciar contador</button></div></article>
+<article class="panel"><div class="panel-head"><div><h2>Reto de compases</h2><p class="panel-sub">Una pregunta rápida, una explicación al responder.</p></div><span class="score" id="quiz-score">0 puntos</span></div><p class="quiz-question" id="quiz-question">¿Qué familia métrica tiene este palo?</p><div class="quiz-options" id="quiz-options"></div><p class="feedback" id="quiz-feedback" role="status" aria-live="polite">Elige una respuesta.</p><div class="controls"><button class="btn" id="next-quiz" type="button" disabled>Siguiente pregunta →</button><button class="btn" id="restart-quiz" type="button">Reiniciar reto</button></div></article></div></section>
+<section class="section" id="steam"><div class="section-title"><div><span class="eyebrow">05 · Conecta ideas</span><h2>El flamenco también es STEAM</h2></div><p>El ritmo se puede contar, dibujar, escuchar y estudiar con herramientas digitales.</p></div><div class="steam-grid"><article class="steam-card"><span class="steam-icon" aria-hidden="true">◷</span><h3>Matemáticas · patrones</h3><p>Un ciclo de 12 tiene doce pulsos que se repiten. Los acentos crean agrupaciones y simetrías; si el tempo sube, el ciclo dura menos.</p></article><article class="steam-card"><span class="steam-icon" aria-hidden="true">⌘</span><h3>Tecnología · sincronización</h3><p>El navegador programa sonidos con un reloj de audio. El dibujo circular sigue los eventos para que puedas ver qué pulso está activo.</p></article><article class="steam-card"><span class="steam-icon" aria-hidden="true">〰</span><h3>Física · sonido</h3><p>La frecuencia, medida en hercios, se relaciona con lo grave o agudo. La amplitud influye en la intensidad. Los sonidos del simulador son síntesis electrónica sencilla.</p></article></div><p class="note">El círculo es una representación didáctica: ayuda a contar y comparar patrones, pero no pretende fijar una única manera universal de interpretar cada palo.</p></section>
+</main>
+<footer class="footer"><div class="footer-inner"><p>Aplicación desarrollada en el marco del Proyecto STEAM 4.0 / Programa de Cooperación Territorial Código Escuela 4.0</p><strong>Aprender · Crear · Compartir</strong></div></footer>
+<script>
+(function(){
+"use strict";
+const palos={
+solea:{name:"Soleá",symbol:"◉",family:"Compás de 12",beats:12,accents:[12,3,6,8,10],tempo:90,range:"70–120 BPM aprox.",meter:"Ciclo de 12 tiempos, con acentos guía en 12, 3, 6, 8 y 10.",origin:"Tradición andaluza; suele tener un carácter profundo y reposado.",listen:"Escucha el ciclo amplio y el peso de los acentos. No depende solo de la velocidad: también importan el cante, el fraseo y el acompañamiento.",tip:"Cuenta en voz alta hasta 12. Prueba a dar una palmada más marcada en 12, 3, 6, 8 y 10; después escucha el ciclo completo sin palmear.",bpm:90},
+bulerias:{name:"Bulerías",symbol:"✦",family:"Compás de 12",beats:12,accents:[12,3,6,8,10],tempo:150,range:"120–190 BPM aprox.; hay variaciones",meter:"Ciclo de 12 tiempos; el punto de entrada y la sensación del pulso pueden cambiar según la interpretación.",origin:"Muy asociada a Jerez y a contextos festivos y de improvisación.",listen:"Suele sentirse viva y flexible. Escucha cómo el grupo sostiene el ciclo aunque el cante o el baile jueguen con el fraseo.",tip:"Empieza despacio. Cuenta el ciclo y prueba a entrar desde distintos puntos con ayuda del docente: en bulerías la orientación del ciclo es especialmente variable.",bpm:150},
+alegrias:{name:"Alegrías",symbol:"✧",family:"Compás de 12",beats:12,accents:[12,3,6,8,10],tempo:120,range:"100–160 BPM aprox.",meter:"Compás de 12 tiempos, emparentado con la familia rítmica de soleá.",origin:"Cádiz; suele asociarse a un carácter luminoso y festivo.",listen:"Además del ciclo de 12, atiende al aire, las melodías y los remates. El patrón de acentos por sí solo no identifica siempre el palo.",tip:"Compara el mismo ciclo de 12 a dos velocidades y escucha cómo cambia el carácter al combinarlo con el fraseo.",bpm:120},
+tangos:{name:"Tangos",symbol:"▰",family:"Binario / 4 pulsos",beats:4,accents:[1,3],tempo:100,range:"80–130 BPM aprox.",meter:"Patrón didáctico de 4 pulsos con acento guía en 1 y 3; también se siente como binario.",origin:"Familia extendida por distintas zonas de Andalucía y otras tradiciones flamencas.",listen:"Busca un balanceo regular de dos partes, con los pulsos 1 y 3 destacados en este ejemplo de aula.",tip:"Cuenta 1–2–3–4 y marca más fuerte el 1 y el 3. Después cambia el tempo sin perder la regularidad.",bpm:100},
+sevillanas:{name:"Sevillanas",symbol:"♧",family:"Ternario / 3 pulsos",beats:3,accents:[1],tempo:120,range:"90–140 BPM aprox.",meter:"Agrupación ternaria de 3 pulsos en esta representación sencilla; la danza suele organizarse en coplas y frases.",origin:"Baile y canción de gran presencia en Andalucía occidental y celebraciones populares.",listen:"Siente el balanceo de tres: UNO-dos-tres. El acompañamiento real incluye rasgueos y patrones más ricos que este metrónomo.",tip:"Di UNO-dos-tres, dando un paso o palmada suave en el uno. Repite el grupo sin acelerar.",bpm:120},
+fandangos:{name:"Fandangos de Huelva",symbol:"⌁",family:"Ternario / 3 pulsos",beats:3,accents:[1,3],tempo:105,range:"80–130 BPM aprox.",meter:"Base ternaria en esta guía; ciertos acompañamientos enfatizan también el tercer pulso. Existen variantes locales.",origin:"Tradición de Huelva con estilos locales diversos y relación con el baile y el cante.",listen:"Prueba a sentir tres pulsos y escucha el dibujo melódico del cante. Los estilos de fandango no son todos iguales.",tip:"Cuenta 1–2–3 y prueba acentos suaves en 1 y 3. Pregunta qué cambia cuando el patrón se acompaña de otra manera.",bpm:105}
+};
+const $=id=>document.getElementById(id);
+let selected="solea",ctx=null,playing=false,paused=false,lookahead=null,nextTime=0,beatIndex=0,barCount=0,tempo=90,volume=.65,palmCount=0,quizIndex=0,quizScore=0,quizAnswered=false,scheduled=[];
+const quiz=[
+{q:"¿Qué familia métrica se representa normalmente en la soleá?",opts:["Ciclo de 12 tiempos","Grupo de 3 tiempos","Grupo de 4 tiempos","Pulso sin repetición"],correct:0,explain:"La soleá se basa habitualmente en un ciclo de 12 tiempos, con acentos guía característicos."},
+{q:"¿Qué patrón de aula usamos para los tangos?",opts:["4 pulsos, acentos guía en 1 y 3","12 pulsos, todos igual de fuertes","3 pulsos, acento solo en 2","8 pulsos sin repetición"],correct:0,explain:"El ejemplo simplificado de tangos usa cuatro pulsos con peso en 1 y 3. El acompañamiento real puede ser más complejo."},
+{q:"¿Qué significa BPM?",opts:["Pulsos por minuto","Notas por pantalla","Volumen del altavoz","Número de instrumentos"],correct:0,explain:"BPM viene de beats per minute: pulsos por minuto. Si suben los BPM, cada pulso dura menos."},
+{q:"¿Qué familia métrica se usa en esta guía para las sevillanas?",opts:["Ternaria, agrupada de tres en tres","Compás de 12 exclusivamente","Binaria, de dos en dos","No tiene pulso"],correct:0,explain:"La guía representa un grupo ternario de tres pulsos. La estructura completa de las sevillanas incluye frases y coplas."},
+{q:"¿Por qué los acentos de bulerías pueden sentirse distintos?",opts:["La entrada y el fraseo varían según interpretación","Porque no tienen ciclo","Porque siempre van a la misma velocidad","Porque no se pueden contar"],correct:0,explain:"Aunque se suele hablar de un ciclo de 12, la sensación de entrada, el fraseo y la interpretación pueden variar."}
+];
+function currentPalo(){return palos[selected]}
+function renderPaloButtons(){const host=$("palo-list");host.innerHTML="";Object.entries(palos).forEach(([id,p])=>{const b=document.createElement("button");b.type="button";b.className="palo-button";b.setAttribute("aria-pressed",String(id===selected));b.dataset.palo=id;b.innerHTML='<span class="palo-symbol" aria-hidden="true">'+p.symbol+'</span><span class="palo-name">'+p.name+'</span><span class="palo-meter">'+p.family+'</span>';b.addEventListener("click",()=>selectPalo(id));host.appendChild(b)})}
+function pointFor(i,n,r){const angle=(-Math.PI/2)+(2*Math.PI*i/n);return{x:210+Math.cos(angle)*r,y:210+Math.sin(angle)*r}}
+function renderCircle(){const p=currentPalo(),n=p.beats; $("polygon-layer").innerHTML="";$("spokes-layer").innerHTML="";$("nodes-layer").innerHTML="";const pts=[];for(let i=0;i<n;i++){const pt=pointFor(i,n,100);pts.push(pt.x.toFixed(2)+","+pt.y.toFixed(2))}const polygon=document.createElementNS("http://www.w3.org/2000/svg","polygon");polygon.setAttribute("points",pts.join(" "));polygon.setAttribute("class","pattern-polygon");$("polygon-layer").appendChild(polygon);for(let i=0;i<n;i++){const outer=pointFor(i,n,137),inner=pointFor(i,n,117),node=pointFor(i,n,137),accent=p.accents.includes(i+1);const line=document.createElementNS("http://www.w3.org/2000/svg","line");line.setAttribute("x1",inner.x);line.setAttribute("y1",inner.y);line.setAttribute("x2",outer.x);line.setAttribute("y2",outer.y);line.setAttribute("class","spoke");$("spokes-layer").appendChild(line);const c=document.createElementNS("http://www.w3.org/2000/svg","circle");c.setAttribute("cx",node.x);c.setAttribute("cy",node.y);c.setAttribute("r",accent?19:15);c.setAttribute("class","beat-node"+(accent?" strong":""));c.dataset.beat=i;$("nodes-layer").appendChild(c);const t=document.createElementNS("http://www.w3.org/2000/svg","text");t.setAttribute("x",node.x);t.setAttribute("y",node.y);t.setAttribute("class","beat-label"+(accent?" strong-label":""));t.textContent=String(i+1);$("nodes-layer").appendChild(t)}$("svg-count").textContent=n;$("svg-title").textContent="Compás circular de "+p.name;$("svg-desc").textContent=n+" tiempos; acentos guía en "+p.accents.join(", ")+".";
+$("sim-title").textContent="Compás circular · "+p.name;$("circle-heading").textContent=p.name;$("circle-sub").textContent=n===12?"Ciclo de 12 tiempos":n+" pulsos por grupo";$("meter-pill").textContent=p.family;$("fact-title").textContent=p.name;$("fact-family").textContent=p.family;$("fact-meter").textContent=p.meter;$("fact-accents").textContent=p.accents.join(", ")+" (numeración didáctica).";$("fact-tempo").textContent=p.range;$("fact-origin").textContent=p.origin;$("fact-listen").textContent=p.listen;$("fact-tip").textContent=p.tip;$("tempo").value=p.bpm;tempo=p.bpm;$("tempo-output").textContent=tempo+" BPM";$("current-beat").textContent="—";$("bar-count").textContent="· listo para empezar";$("palo-list").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.palo===selected)));highlightBeat(-1)}
+function selectPalo(id){if(!palos[id])return;stopPlayback();selected=id;renderCircle()}
+function highlightBeat(index){$("nodes-layer").querySelectorAll(".beat-node").forEach((node,i)=>node.classList.toggle("current",i===index));$("current-beat").textContent=index<0?"—":String(index+1);if(index>=0)$("bar-count").textContent="· ciclo "+(barCount+1)}
+function getAudio(){if(!ctx){const C=window.AudioContext||window.webkitAudioContext;if(!C)return null;ctx=new C()}if(ctx.state==="suspended")ctx.resume();return ctx}
+function playTone(kind,time){const ac=getAudio();if(!ac)return;const master=ac.createGain();master.gain.value=volume;master.connect(ac.destination);const osc=ac.createOscillator(),gain=ac.createGain();osc.connect(gain);gain.connect(master);let f=kind==="cajon"?115:kind==="guitarra"?392:kind==="accent"?1300:850;let end=kind==="cajon"?52:kind==="guitarra"?250:kind==="accent"?600:500;let dur=kind==="guitarra"?.22:kind==="cajon"?.14:.065;osc.type=kind==="cajon"?"sine":kind==="guitarra"?"triangle":"triangle";osc.frequency.setValueAtTime(f,time);osc.frequency.exponentialRampToValueAtTime(Math.max(1,end),time+dur);gain.gain.setValueAtTime((kind==="cajon"?.5:kind==="guitarra"?.22:.25),time);gain.gain.exponentialRampToValueAtTime(.001,time+dur);osc.start(time);osc.stop(time+dur+.015);if(kind!=="guitarra"){const noise=ac.createBufferSource();const buffer=ac.createBuffer(1,Math.floor(ac.sampleRate*.025),ac.sampleRate);const data=buffer.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=Math.random()*2-1;noise.buffer=buffer;const ng=ac.createGain();ng.gain.setValueAtTime(kind==="cajon"?.17:.11,time);ng.gain.exponentialRampToValueAtTime(.001,time+.025);noise.connect(ng);ng.connect(master);noise.start(time);noise.stop(time+.03)}}
+function scheduleBeat(){if(!playing)return;const ac=getAudio();if(!ac)return;const p=currentPalo(),interval=60/tempo;while(nextTime<ac.currentTime+.12){const idx=beatIndex,accent=p.accents.includes(idx+1);scheduled.push({index:idx,time:nextTime});if($("layer-palmas").checked)playTone(accent?"accent":"palmas",nextTime);if($("layer-cajon").checked&&(accent||idx%2===0))playTone("cajon",nextTime);if($("layer-guitarra").checked&&idx%2===0)playTone("guitarra",nextTime);nextTime+=interval;beatIndex++;if(beatIndex>=p.beats){beatIndex=0;barCount++}}}
+function paintClock(){if(!playing)return;const ac=getAudio();if(!ac)return;let current=null;while(scheduled.length&&scheduled[0].time<ac.currentTime-.015)current=scheduled.shift();if(current)highlightBeat(current.index);requestAnimationFrame(paintClock)}
+function startPlayback(){if(playing)return;const ac=getAudio();if(!ac){$("bar-count").textContent="· este navegador no admite Web Audio";return}playing=true;paused=false;nextTime=ac.currentTime+.06;scheduled=[];$("play").disabled=true;$("pause").disabled=false;$("bar-count").textContent="· ciclo 1";scheduleBeat();lookahead=window.setInterval(scheduleBeat,25);requestAnimationFrame(paintClock)}
+function pausePlayback(){if(!playing)return;playing=false;paused=true;if(lookahead!==null)clearInterval(lookahead);lookahead=null;$("play").disabled=false;$("pause").disabled=true;$("bar-count").textContent="· en pausa"}
+function stopPlayback(){playing=false;paused=false;if(lookahead!==null)clearInterval(lookahead);lookahead=null;scheduled=[];beatIndex=0;barCount=0;$("play").disabled=false;$("pause").disabled=true;highlightBeat(-1);$("bar-count").textContent="· listo para empezar"}
+$("play").addEventListener("click",startPlayback);$("pause").addEventListener("click",pausePlayback);$("restart").addEventListener("click",()=>{stopPlayback();startPlayback()});$("tempo").addEventListener("input",e=>{tempo=Number(e.target.value);$("tempo-output").textContent=tempo+" BPM"});$("volume").addEventListener("input",e=>{volume=Number(e.target.value)/100;$("volume-output").textContent=e.target.value+" %"});
+$("hear-example").addEventListener("click",()=>{if(playing){stopPlayback()}startPlayback();window.setTimeout(()=>{if(playing)pausePlayback()},currentPalo().beats*60000/tempo+150)});
+function palm(){palmCount++;$("palm-count").textContent=palmCount;$("palm-hit").classList.add("palm-hit");$("palm-feedback").classList.add("good");$("palm-feedback").firstChild.textContent="¡Bien! Palmadas marcadas: ";window.setTimeout(()=>$("palm-hit").classList.remove("palm-hit"),100);playTone("palmas",getAudio()?.currentTime||0)}
+$("palm-hit").addEventListener("click",palm);document.addEventListener("keydown",e=>{if(e.code!=="Space"||e.repeat||e.target.matches("input,textarea,select,button,a"))return;e.preventDefault();palm()});$("reset-palms").addEventListener("click",()=>{palmCount=0;$("palm-count").textContent="0";$("palm-feedback").firstChild.textContent="Palmadas marcadas: ";$("palm-feedback").classList.remove("good")});
+function renderQuiz(){quizAnswered=false;const q=quiz[quizIndex%quiz.length];$("quiz-question").textContent=q.q;$("quiz-options").innerHTML="";$("quiz-feedback").textContent="Elige una respuesta.";$("quiz-feedback").className="feedback";$("next-quiz").disabled=true;q.opts.forEach((option,i)=>{const b=document.createElement("button");b.className="quiz-option";b.type="button";b.textContent=option;b.addEventListener("click",()=>answerQuiz(i));$("quiz-options").appendChild(b)});$("quiz-score").textContent=quizScore+" puntos"}
+function answerQuiz(index){if(quizAnswered)return;quizAnswered=true;const q=quiz[quizIndex%quiz.length];[...$("quiz-options").children].forEach((b,i)=>{b.disabled=true;if(i===q.correct)b.classList.add("correct");else if(i===index)b.classList.add("incorrect")});if(index===q.correct){quizScore+=10;$("quiz-feedback").className="feedback good";$("quiz-feedback").textContent="¡Correcto! "+q.explain}else{$("quiz-feedback").className="feedback";$("quiz-feedback").textContent="Casi. "+q.explain}$("quiz-score").textContent=quizScore+" puntos";$("next-quiz").disabled=false}
+$("next-quiz").addEventListener("click",()=>{if(!quizAnswered)return;quizIndex=(quizIndex+1)%quiz.length;renderQuiz()});$("restart-quiz").addEventListener("click",()=>{quizIndex=0;quizScore=0;renderQuiz()});
+renderPaloButtons();renderCircle();renderQuiz();
+window.addEventListener("pagehide",stopPlayback);
+})();
+</script>
 </body>
 </html>

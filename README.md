@@ -1,44 +1,43 @@
-# Flamenco en juego — palos y ritmos
+# Flamenco en juego
 
-Aplicación educativa para 1.º y 2.º de ESO centrada en conocer los palos del flamenco, escuchar sus compases y acentos y experimentar con patrones rítmicos. La propuesta prioriza aprender escuchando y creando, no completar retos competitivos.
+Simulador educativo interactivo de palos, compases y ritmos flamencos para alumnado de 1.º y 2.º de ESO. El objetivo es aprender escuchando, contando, observando y practicando.
 
-## Funcionalidades
+## Funciones
 
-- **Explora los palos:** preguntas interactivas para reconocer tangos, soleá, alegrías, bulerías y conceptos de compás.
-- **Sigue el compás:** escucha una secuencia sintética de doce pulsos y practica la identificación de acentos. No sustituye una grabación real de un palo.
-- **Crea y escucha:** secuenciador de ocho pasos con palmas, cajón, guitarra y zapateado; permite cambiar la velocidad y combinar sonidos.
-- **Modo aula opcional:** tres equipos personalizables, selector de equipo activo y clasificación para actividades cooperativas.
-- **Guardado local:** nombres y puntuaciones en `localStorage`; no hay cuentas ni autenticación.
-- **Diseño adaptable y accesible:** navegación por teclado, foco visible, etiquetas accesibles y respeto por movimiento reducido.
+- Selector interactivo de **soleá, bulerías, alegrías, tangos, sevillanas y fandangos de Huelva**.
+- Visualizador circular SVG que cambia según el palo, sus tiempos y los acentos guía.
+- Metrónomo continuo con control de BPM, pausa, reinicio y programación de audio mediante el reloj de Web Audio API.
+- Capas independientes de palmas, cajón y guitarra sintética, con control de volumen.
+- Ficha didáctica para cada palo: estructura métrica, acentos orientativos, tempo de referencia, contexto, pista auditiva y actividad.
+- Práctica manual de palmas con ratón, pantalla táctil o barra espaciadora.
+- Reto de conceptos métricos con corrección y explicación inmediata.
+- Sección STEAM sobre patrones matemáticos, tecnología de audio y física del sonido.
+- Diseño adaptable, foco de teclado visible, etiquetas accesibles y preferencia de movimiento reducido.
+- Sin dependencias, backend, cuentas, servicios de pago ni datos personales. La aplicación puede probarse abriendo `index.html`.
 
-## Ejecutar localmente
+## Nota musical importante
 
-Abre `index.html` en un navegador moderno. Para probar todas las funciones de audio, usa un navegador con soporte para Web Audio y pulsa primero un control de reproducción para habilitar el audio.
+Los patrones se presentan como **guías didácticas**, no como reglas universales. Soleá, alegrías y bulerías suelen explicarse mediante ciclos de 12 tiempos, pero la entrada, el fraseo y la percepción de los acentos pueden variar según la interpretación. Los tangos se representan aquí con cuatro pulsos y acentos guía en 1 y 3; las sevillanas y los fandangos de Huelva se simplifican mediante agrupaciones ternarias. El acompañamiento real es más rico que el patrón sintético del simulador y conviene contrastarlo con interpretaciones autorizadas y el trabajo del profesorado.
 
-No requiere dependencias, instalación ni servidor.
+Los sonidos se sintetizan en el navegador con Web Audio API. No son grabaciones auténticas ni se incluyen muestras comerciales. La capa llamada «Guitarra sintética» es un timbre electrónico sencillo, no una guitarra grabada.
 
-## Publicar con GitHub Pages
+## Probar localmente
 
-1. Abre **Settings → Pages** en el repositorio.
-2. En **Build and deployment**, selecciona **Deploy from a branch**.
-3. Selecciona la rama `main` y la carpeta `/(root)`.
-4. Guarda y espera a que termine la publicación.
+1. Descarga o clona el repositorio.
+2. Abre `index.html` en un navegador moderno.
+3. Pulsa «Reproducir» para permitir el audio. Si el navegador bloquea el sonido, comprueba que esté actualizado y que el volumen no esté silenciado.
+4. Ejecuta las pruebas de humo con Node.js 22 o una versión compatible:
 
-URL prevista: https://iesandresbenitez.github.io/mus-flamenco/
+   ```sh
+   node tests/smoke.test.cjs
+   ```
 
-La URL solo estará disponible cuando GitHub Pages se haya activado correctamente.
+No se necesita instalar dependencias ni iniciar un servidor.
 
-## Identidad visual
+## GitHub Pages
 
-La interfaz está orientada a alumnado de 1.º y 2.º de ESO y sigue la guía visual corporativa STEAM 4.0: granate `#702B3A`, granate oscuro `#4A1D29`, beige `#F3E8D7`, arena `#E1CFB5`, dorado `#C49A6C` y fondo marfil `#FFFCF7`. La cabecera es sticky, con marca a la izquierda, navegación a la derecha y cápsula de puntuación; el pie institucional conserva el texto requerido.
+El proyecto sigue siendo una web estática compatible con GitHub Pages. La publicación no se activa desde este cambio. Cuando se decida publicar, comprueba **Settings → Pages** y elige la rama y carpeta de publicación deseadas.
 
-## Privacidad y límites de la demo
-
-- No existe autenticación real ni sincronización entre dispositivos.
-- Las puntuaciones se guardan únicamente en el navegador actual y pueden borrarse al limpiar sus datos.
-- Los nombres de equipos son editables y conviene usar nombres ficticios.
-- Los sonidos son síntesis sencillas, no grabaciones de instrumentos reales.
-
-## Pie institucional obligatorio
+## Identidad institucional
 
 Aplicación desarrollada en el marco del Proyecto STEAM 4.0 / Programa de Cooperación Territorial Código Escuela 4.0
