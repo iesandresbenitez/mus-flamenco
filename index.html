@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FFFCF7">
+  <meta name="description" content="Flamenco STEAM Challenge: ritmo, música, ciencia y retos por equipos para celebrar el Día del Flamenco.">
+  <title>Flamenco STEAM Challenge | Proyecto STEAM 4.0</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --granate: #702B3A;
+      --granate-oscuro: #4A1D29;
+      --granate-secundario: #8E4A56;
+      --beige: #F3E8D7;
+      --arena: #E1CFB5;
+      --dorado: #C49A6C;
+      --marfil: #FFFCF7;
+      --texto: #35252A;
+      --texto-secundario: #806E68;
+      --blanco: #FFFFFF;
+      --correcto: #286448;
+      --error: #9C303B;
+      --radio: 18px;
+      --sombra: 0 8px 26px rgba(74, 29, 41, .07);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    body { margin: 0; background: var(--marfil); color: var(--texto); line-height: 1.55; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid var(--dorado); outline-offset: 3px; }
+    .site-header { position: sticky; top: 0; z-index: 20; background: rgba(255,252,247,.97); border-bottom: 1px solid var(--arena); backdrop-filter: blur(12px); }
+    .header-inner { max-width: 1180px; min-height: 76px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 11px; min-width: 0; color: var(--granate-oscuro); text-decoration: none; }
+    .brand-mark { display: grid; place-items: center; flex: 0 0 42px; height: 42px; border-radius: 13px; background: var(--granate); color: var(--marfil); font-size: 21px; }
+    .brand-copy { min-width: 0; }
+    .brand-title { display: block; font-size: 15px; font-weight: 800; letter-spacing: -.025em; line-height: 1.2; }
+    .brand-subtitle { display: block; margin-top: 4px; color: var(--texto-secundario); font-size: 11px; line-height: 1.2; }
+    .header-right { display: flex; align-items: center; justify-content: flex-end; gap: 16px; }
+    .main-nav { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 4px; }
+    .nav-link { display: inline-flex; align-items: center; min-height: 38px; padding: 8px 11px; border-radius: 10px; color: var(--texto-secundario); font-size: 13px; font-weight: 650; text-decoration: none; white-space: nowrap; transition: background .16s ease, color .16s ease; }
+    .nav-link:hover, .nav-link[aria-current="page"] { background: var(--beige); color: var(--granate); }
+    .score-pill { display: inline-flex; align-items: center; gap: 7px; flex-shrink: 0; padding: 8px 12px; border: 1px solid var(--arena); border-radius: 999px; background: var(--beige); color: var(--granate-oscuro); font-size: 12px; font-weight: 800; white-space: nowrap; }
+    main { max-width: 1180px; margin: 0 auto; padding: 34px 24px 52px; }
+    .hero { position: relative; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(250px, .65fr); gap: 28px; align-items: center; padding: clamp(26px, 5vw, 54px); border: 1px solid var(--arena); border-radius: 26px; background: linear-gradient(115deg, #F3E8D7 0%, #FFFCF7 72%); }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--granate); font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 22px; height: 2px; background: var(--dorado); }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 680px; margin: 13px 0 16px; color: var(--granate-oscuro); font-size: clamp(2.1rem, 5vw, 4rem); line-height: 1.02; letter-spacing: -.055em; }
+    h1 em { color: var(--granate); font-style: normal; }
+    .hero-copy { max-width: 610px; margin-bottom: 23px; color: var(--texto-secundario); font-size: clamp(15px, 1.8vw, 18px); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .button { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 44px; padding: 11px 17px; border: 1px solid transparent; border-radius: 12px; font-size: 14px; font-weight: 750; text-decoration: none; transition: transform .16s ease, background .16s ease, border-color .16s ease; }
+    .button:hover { transform: translateY(-1px); }
+    .button-primary { background: var(--granate); color: var(--blanco); }
+    .button-primary:hover { background: var(--granate-oscuro); }
+    .button-secondary { border-color: var(--arena); background: var(--marfil); color: var(--granate); }
+    .button-secondary:hover { background: var(--beige); }
+    .hero-art { display: grid; place-items: center; min-height: 220px; }
+    .vinyl { position: relative; display: grid; place-items: center; width: min(100%, 250px); aspect-ratio: 1; border: 1px solid rgba(112,43,58,.15); border-radius: 50%; background: repeating-radial-gradient(circle at center, #702B3A 0 2px, #652634 3px 5px, #702B3A 6px 8px); box-shadow: 0 18px 34px rgba(74,29,41,.16); transform: rotate(-8deg); }
+    .vinyl::before { content: ""; position: absolute; inset: 16%; border: 1px solid rgba(255,252,247,.23); border-radius: 50%; }
+    .vinyl-label { display: grid; place-items: center; width: 38%; aspect-ratio: 1; border: 5px solid var(--beige); border-radius: 50%; background: var(--dorado); color: var(--granate-oscuro); font-size: 34px; }
+    .section { margin-top: 42px; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 18px; margin-bottom: 18px; }
+    .section-heading h2 { margin: 5px 0 0; color: var(--granate-oscuro); font-size: clamp(1.45rem, 3vw, 2rem); letter-spacing: -.035em; }
+    .section-heading p { max-width: 520px; margin: 0; color: var(--texto-secundario); font-size: 14px; }
+    .mode-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+    .mode-card { display: flex; flex-direction: column; align-items: flex-start; min-height: 218px; padding: 22px; border: 1px solid var(--arena); border-radius: var(--radio); background: var(--blanco); box-shadow: var(--sombra); }
+    .mode-icon { display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 15px; border-radius: 14px; background: var(--beige); color: var(--granate); font-size: 23px; }
+    .mode-card h3 { margin-bottom: 7px; color: var(--granate-oscuro); font-size: 17px; }
+    .mode-card p { flex: 1; margin-bottom: 18px; color: var(--texto-secundario); font-size: 13px; }
+    .text-link { padding: 0; border: 0; background: transparent; color: var(--granate); font-size: 13px; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+    .content-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr); gap: 18px; }
+    .panel { padding: 24px; border: 1px solid var(--arena); border-radius: var(--radio); background: var(--blanco); box-shadow: var(--sombra); }
+    .panel h3 { margin-bottom: 6px; color: var(--granate-oscuro); font-size: 19px; }
+    .panel-intro { margin-bottom: 18px; color: var(--texto-secundario); font-size: 13px; }
+    .team-row { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 12px; align-items: center; margin-bottom: 15px; }
+    .team-row label { display: block; margin-bottom: 5px; color: var(--texto); font-size: 12px; font-weight: 750; }
+    .team-row input { width: 100%; min-width: 0; padding: 10px 12px; border: 1px solid var(--arena); border-radius: 10px; background: var(--marfil); color: var(--texto); }
+    .team-score { min-width: 78px; padding: 10px 12px; border-radius: 10px; background: var(--beige); color: var(--granate); text-align: center; font-size: 13px; font-weight: 850; }
+    .leaderboard { display: grid; gap: 9px; }
+    .leader-row { display: grid; grid-template-columns: 30px minmax(0,1fr) auto; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 11px; background: var(--marfil); }
+    .leader-rank { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; background: var(--beige); color: var(--granate); font-size: 12px; font-weight: 850; }
+    .leader-name { overflow-wrap: anywhere; font-size: 13px; font-weight: 750; }
+    .leader-points { color: var(--granate); font-size: 13px; font-weight: 850; white-space: nowrap; }
+    .activity { display: none; margin-top: 28px; scroll-margin-top: 100px; }
+    .activity.active { display: block; animation: appear .2s ease-out; }
+    @keyframes appear { from { opacity: .55; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    .activity-header { display: flex; justify-content: space-between; align-items: start; gap: 15px; margin-bottom: 18px; }
+    .activity-header h2 { margin: 4px 0 6px; color: var(--granate-oscuro); font-size: clamp(1.5rem,3vw,2rem); }
+    .activity-header p { margin-bottom: 0; color: var(--texto-secundario); font-size: 14px; }
+    .tag { display: inline-flex; align-items: center; padding: 6px 10px; border: 1px solid var(--arena); border-radius: 999px; background: var(--beige); color: var(--granate); font-size: 11px; font-weight: 800; white-space: nowrap; }
+    .beat-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+    .beat-display { display: flex; align-items: center; gap: 10px; color: var(--texto-secundario); font-size: 13px; }
+    .beat-display strong { color: var(--granate); font-size: 20px; }
+    .pulse-grid { display: grid; grid-template-columns: repeat(12, minmax(0,1fr)); gap: 7px; margin: 18px 0; }
+    .pulse { display: grid; place-items: center; min-width: 0; aspect-ratio: 1; padding: 0; border: 1px solid var(--arena); border-radius: 10px; background: var(--marfil); color: var(--texto-secundario); font-size: 12px; font-weight: 800; }
+    .pulse.active { border-color: var(--granate); background: var(--granate); color: white; }
+    .pulse.hit { outline: 3px solid rgba(196,154,108,.55); outline-offset: 2px; }
+    .pulse:disabled { cursor: default; opacity: 1; }
+    .feedback { min-height: 26px; margin: 14px 0; color: var(--texto-secundario); font-size: 14px; font-weight: 700; }
+    .feedback.success { color: var(--correcto); }
+    .feedback.error { color: var(--error); }
+    .quiz-options { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+    .quiz-option { min-height: 48px; padding: 12px 14px; border: 1px solid var(--arena); border-radius: 12px; background: var(--marfil); color: var(--texto); text-align: left; font-size: 14px; font-weight: 650; }
+    .quiz-option:hover:not(:disabled) { border-color: var(--granate-secundario); background: var(--beige); }
+    .quiz-option.correct { border-color: #8AB49C; background: #EAF4ED; color: var(--correcto); }
+    .quiz-option.incorrect { border-color: #D9A3A7; background: #F9EBEC; color: var(--error); }
+    .quiz-option:disabled { cursor: default; }
+    .quiz-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; color: var(--texto-secundario); font-size: 12px; font-weight: 750; }
+    .question { margin-bottom: 18px; color: var(--granate-oscuro); font-size: clamp(1.1rem,2.5vw,1.45rem); line-height: 1.35; }
+    .sequencer { display: grid; gap: 12px; }
+    .instrument-row { display: grid; grid-template-columns: 105px minmax(0,1fr); align-items: center; gap: 12px; }
+    .instrument-label { color: var(--granate-oscuro); font-size: 13px; font-weight: 800; }
+    .steps { display: grid; grid-template-columns: repeat(8,minmax(0,1fr)); gap: 6px; }
+    .step { min-width: 0; aspect-ratio: 1; padding: 0; border: 1px solid var(--arena); border-radius: 8px; background: var(--marfil); }
+    .step.on { border-color: var(--granate); background: var(--granate); box-shadow: inset 0 -3px 0 rgba(74,29,41,.25); }
+    .step.playing { outline: 3px solid var(--dorado); outline-offset: 1px; }
+    .step:focus-visible { outline: 3px solid var(--dorado); }
+    .sequencer-controls { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 20px; }
+    .notice { display: flex; gap: 10px; align-items: start; margin-top: 16px; padding: 12px 14px; border: 1px solid var(--arena); border-radius: 12px; background: var(--beige); color: var(--texto-secundario); font-size: 12px; }
+    .site-footer { border-top: 1px solid var(--arena); background: #F8F0E5; }
+    .footer-inner { max-width: 1180px; margin: 0 auto; padding: 22px 24px; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+    .footer-text { margin: 0; color: var(--texto-secundario); font-size: 12px; }
+    .footer-label { color: var(--granate); font-size: 11px; font-weight: 800; white-space: nowrap; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    @media (max-width: 860px) {
+      .header-inner { align-items: flex-start; flex-direction: column; gap: 10px; padding: 12px 18px; }
+      .header-right { width: 100%; justify-content: space-between; gap: 8px; }
+      .main-nav { justify-content: flex-start; }
+      .nav-link { padding: 8px 9px; }
+      .hero { grid-template-columns: minmax(0,1fr) 190px; gap: 14px; }
+      .vinyl { width: 180px; }
+      .mode-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    }
+    @media (max-width: 620px) {
+      html { scroll-padding-top: 145px; }
+      .header-inner { padding: 10px 14px; }
+      .brand-mark { flex-basis: 38px; height: 38px; }
+      .brand-title { font-size: 14px; }
+      .brand-subtitle { font-size: 10px; }
+      .header-right { align-items: flex-start; flex-direction: column; }
+      .main-nav { width: 100%; gap: 3px; }
+      .nav-link { min-height: 36px; padding: 7px 9px; font-size: 12px; }
+      .score-pill { align-self: flex-start; padding: 6px 10px; }
+      main { padding: 20px 14px 38px; }
+      .hero { grid-template-columns: 1fr; padding: 25px 21px; }
+      .hero-art { min-height: auto; }
+      .vinyl { width: 135px; }
+      .vinyl-label { font-size: 23px; border-width: 3px; }
+      .section { margin-top: 32px; }
+      .section-heading { align-items: flex-start; flex-direction: column; }
+      .mode-grid, .content-grid { grid-template-columns: 1fr; }
+      .mode-card { min-height: 0; }
+      .panel { padding: 19px; }
+      .pulse-grid { gap: 4px; }
+      .pulse { border-radius: 7px; font-size: 10px; }
+      .quiz-options { grid-template-columns: 1fr; }
+      .instrument-row { grid-template-columns: 78px minmax(0,1fr); gap: 8px; }
+      .steps { gap: 4px; }
+      .step { border-radius: 6px; }
+      .footer-inner { align-items: flex-start; flex-direction: column; padding: 19px 14px; }
+      .activity-header { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#inicio" aria-label="Flamenco STEAM Challenge, inicio">
+        <span class="brand-mark" aria-hidden="true">♫</span>
+        <span class="brand-copy">
+          <span class="brand-title">Flamenco STEAM Challenge</span>
+          <span class="brand-subtitle">Proyecto STEAM 4.0 · Código Escuela 4.0</span>
+        </span>
+      </a>
+      <div class="header-right">
+        <nav class="main-nav" aria-label="Navegación principal">
+          <a class="nav-link" href="#inicio" aria-current="page">Inicio</a>
+          <a class="nav-link" href="#compas">Compás</a>
+          <a class="nav-link" href="#steam">Retos STEAM</a>
+          <a class="nav-link" href="#beatmaker">Crea tu ritmo</a>
+        </nav>
+        <div class="score-pill" aria-live="polite"><span aria-hidden="true">✦</span> <span id="header-score">0 puntos</span></div>
+      </div>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <span class="eyebrow">Música · Ciencia · Creatividad</span>
+        <h1 id="hero-title">El arte tiene <em>compás.</em><br>La ciencia también.</h1>
+        <p class="hero-copy">Escucha, experimenta, resuelve retos y crea tu propio ritmo flamenco. ¡Forma equipo y demuestra que aprender puede sonar muy bien!</p>
+        <div class="hero-actions">
+          <button class="button button-primary" type="button" data-open="compas">▶ Empezar a jugar</button>
+          <button class="button button-secondary" type="button" data-open="steam">Explorar retos STEAM</button>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><div class="vinyl"><div class="vinyl-label">♫</div></div></div>
+    </section>
+
+    <section class="section" aria-labelledby="modes-title">
+      <div class="section-heading">
+        <div><span class="eyebrow">Elige tu desafío</span><h2 id="modes-title">Cuatro formas de jugar</h2></div>
+        <p>Completa actividades, suma puntos y descubre cómo se conectan el flamenco y el mundo STEAM.</p>
+      </div>
+      <div class="mode-grid">
+        <article class="mode-card"><div class="mode-icon" aria-hidden="true">♩</div><h3>El reto del compás</h3><p>Escucha el patrón, marca los pulsos y entrena tu precisión rítmica.</p><button class="text-link" type="button" data-open="compas">Jugar al compás →</button></article>
+        <article class="mode-card"><div class="mode-icon" aria-hidden="true">⚗</div><h3>Laboratorio STEAM</h3><p>Preguntas sobre sonido, matemáticas, instrumentos y cultura flamenca.</p><button class="text-link" type="button" data-open="steam">Resolver retos →</button></article>
+        <article class="mode-card"><div class="mode-icon" aria-hidden="true">♫</div><h3>Crea tu ritmo</h3><p>Combina palmas, cajón, guitarra y zapateado en una secuencia propia.</p><button class="text-link" type="button" data-open="beatmaker">Abrir estudio →</button></article>
+      </div>
+    </section>
+
+    <section class="section content-grid" aria-label="Equipos y clasificación">
+      <div class="panel">
+        <span class="eyebrow">Modo aula</span><h3>Las peñas participantes</h3>
+        <p class="panel-intro">Personaliza los nombres de los equipos. Los puntos se guardan en este dispositivo.</p>
+        <div id="team-editor">
+          <div class="team-row"><div><label for="team-0">Equipo 1</label><input id="team-0" maxlength="32" value="Los Compases"></div><div class="team-score" id="score-0">0 pts</div></div>
+          <div class="team-row"><div><label for="team-1">Equipo 2</label><input id="team-1" maxlength="32" value="Los Duendes"></div><div class="team-score" id="score-1">0 pts</div></div>
+          <div class="team-row"><div><label for="team-2">Equipo 3</label><input id="team-2" maxlength="32" value="Flamencos STEAM"></div><div class="team-score" id="score-2">0 pts</div></div>
+        </div>
+        <label for="active-team" style="display:block;margin:14px 0 6px;font-size:12px;font-weight:750">Equipo que está jugando</label>
+        <select id="active-team" style="width:100%;padding:11px;border:1px solid var(--arena);border-radius:10px;background:var(--marfil);color:var(--texto)">
+          <option value="0">Los Compases</option><option value="1">Los Duendes</option><option value="2">Flamencos STEAM</option>
+        </select>
+        <div class="notice"><span aria-hidden="true">ⓘ</span><span>Esta es una demo educativa sin inicio de sesión. Los nombres y puntuaciones son ficticios y se almacenan solo en el navegador.</span></div>
+      </div>
+      <div class="panel">
+        <span class="eyebrow">Marcador de la clase</span><h3>Clasificación</h3>
+        <p class="panel-intro">La tabla se actualiza con los puntos que consiga cada equipo.</p>
+        <div id="leaderboard" class="leaderboard" aria-live="polite"></div>
+        <button class="button button-secondary" id="reset-scores" type="button" style="margin-top:17px">Reiniciar puntuaciones</button>
+      </div>
+    </section>
+
+    <section class="activity" id="compas" aria-labelledby="compas-title">
+      <div class="activity-header"><div><span class="eyebrow">Música + Matemáticas</span><h2 id="compas-title">El reto del compás</h2><p>Escucha el patrón de 12 pulsos y marca los pulsos fuertes. Cada acierto suma puntos al equipo seleccionado.</p></div><span class="tag">Reto 01</span></div>
+      <div class="panel">
+        <div class="beat-top"><div class="beat-display">Aciertos de esta ronda: <strong id="beat-hits">0/4</strong></div><button class="button button-secondary" id="play-pattern" type="button">▶ Escuchar patrón</button></div>
+        <div class="pulse-grid" id="pulse-grid" aria-label="Patrón rítmico de doce pulsos"></div>
+        <p class="panel-intro">Selecciona los pulsos que crees que llevan el acento y pulsa «Comprobar». Puedes volver a escuchar el patrón.</p>
+        <div class="sequencer-controls"><button class="button button-primary" id="check-beat" type="button">Comprobar respuesta</button><button class="button button-secondary" id="new-beat" type="button">Nuevo patrón</button></div>
+        <p class="feedback" id="beat-feedback" role="status" aria-live="polite">¡Prepárate para escuchar!</p>
+      </div>
+    </section>
+
+    <section class="activity" id="steam" aria-labelledby="steam-title">
+      <div class="activity-header"><div><span class="eyebrow">Ciencia + Tecnología + Arte</span><h2 id="steam-title">Laboratorio STEAM</h2><p>Responde a preguntas sobre el sonido, el ritmo y la cultura flamenca.</p></div><span class="tag">Reto 02</span></div>
+      <div class="panel">
+        <div class="quiz-meta"><span id="quiz-progress">Pregunta 1 de 6</span><span id="quiz-score">0 puntos en este reto</span></div>
+        <h3 class="question" id="quiz-question">¿Qué vibra para producir el sonido de una cuerda de guitarra?</h3>
+        <div class="quiz-options" id="quiz-options"></div>
+        <p class="feedback" id="quiz-feedback" role="status" aria-live="polite">Elige una respuesta.</p>
+        <div class="sequencer-controls"><button class="button button-secondary" id="next-question" type="button" disabled>Siguiente pregunta →</button><button class="button button-secondary" id="restart-quiz" type="button">Volver a empezar</button></div>
+      </div>
+    </section>
+
+    <section class="activity" id="beatmaker" aria-labelledby="beatmaker-title">
+      <div class="activity-header"><div><span class="eyebrow">Creación musical + Tecnología</span><h2 id="beatmaker-title">Crea tu ritmo flamenco</h2><p>Activa las casillas para construir un patrón. Pulsa reproducir y escucha tu mezcla.</p></div><span class="tag">Reto 03</span></div>
+      <div class="panel">
+        <div class="beat-top"><div class="beat-display">Tempo <strong id="tempo-value">100</strong> BPM</div><label for="tempo" style="font-size:13px;color:var(--texto-secundario)">Velocidad <input id="tempo" type="range" min="60" max="150" value="100" style="accent-color:var(--granate);vertical-align:middle;max-width:140px"></label></div>
+        <div class="sequencer" id="sequencer"></div>
+        <div class="sequencer-controls"><button class="button button-primary" id="play-beat" type="button">▶ Reproducir</button><button class="button button-secondary" id="stop-beat" type="button">■ Parar</button><button class="button button-secondary" id="clear-beat" type="button">Limpiar patrón</button><button class="button button-secondary" id="save-beat" type="button">Guardar mi creación (+10 pts)</button></div>
+        <p class="feedback" id="maker-feedback" role="status" aria-live="polite">Activa las casillas para empezar a componer.</p>
+        <div class="notice"><span aria-hidden="true">♫</span><span>Los sonidos sintéticos se generan en el navegador con Web Audio; no se necesita descargar audio ni utilizar canciones comerciales.</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-text">Aplicación desarrollada en el marco del Proyecto STEAM 4.0 / Programa de Cooperación Territorial Código Escuela 4.0</p>
+      <span class="footer-label">Aprender · Crear · Compartir</span>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      "use strict";
+      const STORAGE_KEY = "flamenco-steam-challenge-v1";
+      const initialState = {
+        teams: [
+          { name: "Los Compases", score: 0 },
+          { name: "Los Duendes", score: 0 },
+          { name: "Flamencos STEAM", score: 0 }
+        ],
+        activeTeam: 0,
+        savedCreation: false
+      };
+      let state = loadState();
+      let audioContext = null;
+      let playTimer = null;
+      let quizIndex = 0;
+      let quizPoints = 0;
+      let answered = false;
+      let beatPattern = [];
+      let beatSelection = new Set();
+      let beatDone = false;
+      let makerSaved = false;
+      const $ = (id) => document.getElementById(id);
+      const quiz = [
+        { q: "¿Qué vibra para producir el sonido de una cuerda de guitarra?", a: ["La cuerda", "El color de la madera", "El aire quieto", "La púa por sí sola"], correct: 0, explain: "La cuerda vibra y transmite energía al cuerpo de la guitarra, que ayuda a amplificar el sonido." },
+        { q: "¿Qué unidad se utiliza para medir la frecuencia del sonido?", a: ["Metros", "Hercios (Hz)", "Litros", "Gramos"], correct: 1, explain: "La frecuencia se mide en hercios (Hz) y representa cuántas vibraciones ocurren por segundo." },
+        { q: "Si una cuerda vibra más rápido, normalmente escuchamos un sonido…", a: ["Más agudo", "Más grave", "Más largo siempre", "Sin volumen"], correct: 0, explain: "Una frecuencia mayor suele percibirse como un tono más agudo." },
+        { q: "¿Cuántos pulsos tiene un compás tradicional de soleá?", a: ["4", "6", "12", "20"], correct: 2, explain: "La soleá se organiza tradicionalmente en un ciclo de 12 tiempos, con acentos característicos." },
+        { q: "¿Qué disciplina ayuda a estudiar las proporciones y los patrones rítmicos?", a: ["Matemáticas", "Geología solamente", "Astronomía solamente", "Ninguna"], correct: 0, explain: "Las matemáticas permiten describir duraciones, patrones, ciclos y proporciones musicales." },
+        { q: "¿Cuál de estas opciones describe mejor el cajón flamenco?", a: ["Un instrumento de percusión", "Un instrumento de viento", "Un tipo de cuerda", "Un dispositivo de medida"], correct: 0, explain: "El cajón es un instrumento de percusión que se toca golpeando su superficie." }
+      ];
+      const instruments = [
+        { id: "palmas", label: "Palmas", type: "clap" },
+        { id: "cajon", label: "Cajón", type: "kick" },
+        { id: "guitarra", label: "Guitarra", type: "pluck" },
+        { id: "zapateado", label: "Zapateado", type: "tap" }
+      ];
+      const pattern = {
+        palmas: [0,2,4,6],
+        cajon: [0,4],
+        guitarra: [2,6],
+        zapateado: [3,7]
+      };
+      function loadState() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+          if (saved && Array.isArray(saved.teams) && saved.teams.length === 3) {
+            return { ...initialState, ...saved, teams: saved.teams.map((team, i) => ({ name: String(team.name || initialState.teams[i].name).slice(0,32), score: Math.max(0, Number(team.score) || 0) })) };
+          }
+        } catch (_) { /* almacenamiento no disponible: la app sigue funcionando en memoria */ }
+        return JSON.parse(JSON.stringify(initialState));
+      }
+      function saveState() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_) { /* modo privado o almacenamiento bloqueado */ }
+      }
+      function escapeHTML(value) {
+        return String(value).replace(/[&<>"']/g, (ch) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[ch]));
+      }
+      function updateScoreboard() {
+        state.teams.forEach((team, i) => {
+          $("team-" + i).value = team.name;
+          $("score-" + i).textContent = team.score + " pts";
+        });
+        $("active-team").value = String(state.activeTeam);
+        $("active-team").querySelectorAll("option").forEach((option, i) => option.textContent = state.teams[i].name);
+        const total = state.teams.reduce((sum, team) => sum + team.score, 0);
+        $("header-score").textContent = total + (total === 1 ? " punto" : " puntos");
+        const sorted = state.teams.map((team, index) => ({ ...team, index })).sort((a,b) => b.score - a.score);
+        $("leaderboard").innerHTML = sorted.map((team, rank) => '<div class="leader-row"><span class="leader-rank">' + (rank + 1) + '</span><span class="leader-name">' + escapeHTML(team.name) + '</span><span class="leader-points">' + team.score + ' pts</span></div>').join("");
+        saveState();
+      }
+      function awardPoints(points, message) {
+        state.teams[state.activeTeam].score += points;
+        updateScoreboard();
+        if (message) message.textContent = "+" + points + " puntos para " + state.teams[state.activeTeam].name + ".";
+      }
+      function openActivity(id) {
+        document.querySelectorAll(".activity").forEach(section => section.classList.toggle("active", section.id === id));
+        document.querySelectorAll(".nav-link").forEach(link => {
+          const active = link.getAttribute("href") === "#" + id || (id === "inicio" && link.getAttribute("href") === "#inicio");
+          if (active) link.setAttribute("aria-current", "page"); else link.removeAttribute("aria-current");
+        });
+        if (id !== "inicio") $(id).scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+      }
+      document.querySelectorAll("[data-open]").forEach(button => button.addEventListener("click", () => openActivity(button.dataset.open)));
+      document.querySelectorAll(".nav-link").forEach(link => link.addEventListener("click", () => {
+        const id = link.getAttribute("href").slice(1);
+        if (id === "inicio") document.querySelectorAll(".activity").forEach(section => section.classList.remove("active"));
+        else openActivity(id);
+      }));
+      for (let i = 0; i < 3; i++) {
+        $("team-" + i).addEventListener("change", event => {
+          state.teams[i].name = event.target.value.trim().slice(0,32) || initialState.teams[i].name;
+          updateScoreboard();
+        });
+      }
+      $("active-team").addEventListener("change", event => { state.activeTeam = Number(event.target.value) || 0; saveState(); });
+      $("reset-scores").addEventListener("click", () => {
+        if (!window.confirm("¿Quieres reiniciar las puntuaciones de los tres equipos?")) return;
+        state.teams.forEach(team => team.score = 0);
+        state.savedCreation = false;
+        makerSaved = false;
+        updateScoreboard();
+      });
+
+      function getAudio() {
+        if (!audioContext) {
+          const AudioCtor = window.AudioContext || window.webkitAudioContext;
+          if (!AudioCtor) return null;
+          audioContext = new AudioCtor();
+        }
+        if (audioContext.state === "suspended") audioContext.resume();
+        return audioContext;
+      }
+      function tone(type, time) {
+        const ctx = getAudio();
+        if (!ctx) return;
+        const now = time ?? ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
+        const settings = {
+          clap: { freq: 1500, end: 500, duration: .075, wave: "triangle", volume: .24 },
+          kick: { freq: 130, end: 48, duration: .16, wave: "sine", volume: .45 },
+          pluck: { freq: 660, end: 220, duration: .22, wave: "triangle", volume: .22 },
+          tap: { freq: 360, end: 100, duration: .09, wave: "square", volume: .18 }
+        }[type] || { freq: 440, end: 220, duration: .12, wave: "sine", volume: .2 };
+        osc.type = settings.wave;
+        osc.frequency.setValueAtTime(settings.freq, now);
+        osc.frequency.exponentialRampToValueAtTime(Math.max(1, settings.end), now + settings.duration);
+        gain.gain.setValueAtTime(settings.volume, now);
+        gain.gain.exponentialRampToValueAtTime(.001, now + settings.duration);
+        osc.start(now); osc.stop(now + settings.duration + .02);
+      }
+
+      function newPattern() {
+        beatPattern = [0, 3, 6, 9].sort(() => Math.random() - .5);
+        beatSelection.clear(); beatDone = false;
+        $("pulse-grid").innerHTML = "";
+        for (let i = 0; i < 12; i++) {
+          const button = document.createElement("button");
+          button.type = "button"; button.className = "pulse"; button.textContent = String(i + 1);
+          button.setAttribute("aria-label", "Pulso " + (i + 1));
+          button.setAttribute("aria-pressed", "false");
+          button.addEventListener("click", () => {
+            if (beatDone) return;
+            if (beatSelection.has(i)) beatSelection.delete(i); else beatSelection.add(i);
+            button.classList.toggle("active", beatSelection.has(i));
+            button.setAttribute("aria-pressed", String(beatSelection.has(i)));
+          });
+          $("pulse-grid").appendChild(button);
+        }
+        $("beat-hits").textContent = "0/4";
+        $("beat-feedback").className = "feedback";
+        $("beat-feedback").textContent = "Escucha el patrón y marca los cuatro pulsos destacados.";
+        $("check-beat").disabled = false;
+      }
+      $("play-pattern").addEventListener("click", () => {
+        const ctx = getAudio();
+        if (!ctx) { $("beat-feedback").textContent = "Tu navegador no permite generar audio. Puedes continuar con los retos visuales."; return; }
+        const start = ctx.currentTime + .08;
+        for (let i = 0; i < 12; i++) {
+          const time = start + i * .34;
+          tone(beatPattern.includes(i) ? "clap" : "tap", time);
+          const cell = $("pulse-grid").children[i];
+          setTimeout(() => { cell.classList.add("hit"); setTimeout(() => cell.classList.remove("hit"), 130); }, Math.max(0, (time - ctx.currentTime) * 1000));
+        }
+      });
+      $("check-beat").addEventListener("click", () => {
+        if (beatDone) return;
+        const hits = beatPattern.filter(i => beatSelection.has(i)).length;
+        const falseHits = [...beatSelection].filter(i => !beatPattern.includes(i)).length;
+        const score = Math.max(0, hits * 5 - falseHits * 2);
+        $("beat-hits").textContent = hits + "/4";
+        beatDone = true;
+        $("check-beat").disabled = true;
+        $("pulse-grid").querySelectorAll("button").forEach((button, i) => {
+          button.disabled = true;
+          if (beatPattern.includes(i)) button.classList.add("hit");
+        });
+        if (hits === 4 && falseHits === 0) {
+          $("beat-feedback").className = "feedback success";
+          $("beat-feedback").textContent = "¡Compás perfecto! Has identificado los cuatro acentos.";
+        } else {
+          $("beat-feedback").className = "feedback";
+          $("beat-feedback").textContent = "Buen intento. Has identificado " + hits + " de los 4 acentos. ¡Prueba otro patrón!";
+        }
+        if (score > 0) awardPoints(score);
+      });
+      $("new-beat").addEventListener("click", newPattern);
+
+      function renderQuestion() {
+        answered = false;
+        const item = quiz[quizIndex];
+        $("quiz-progress").textContent = "Pregunta " + (quizIndex + 1) + " de " + quiz.length;
+        $("quiz-score").textContent = quizPoints + " puntos en este reto";
+        $("quiz-question").textContent = item.q;
+        $("quiz-options").innerHTML = "";
+        $("quiz-feedback").className = "feedback";
+        $("quiz-feedback").textContent = "Elige una respuesta.";
+        $("next-question").disabled = true;
+        item.a.forEach((answer, index) => {
+          const button = document.createElement("button");
+          button.type = "button"; button.className = "quiz-option"; button.textContent = answer;
+          button.addEventListener("click", () => answerQuestion(index));
+          $("quiz-options").appendChild(button);
+        });
+      }
+      function answerQuestion(index) {
+        if (answered) return;
+        answered = true;
+        const item = quiz[quizIndex];
+        const buttons = [...$("quiz-options").querySelectorAll("button")];
+        buttons.forEach((button, i) => {
+          button.disabled = true;
+          if (i === item.correct) button.classList.add("correct");
+          else if (i === index) button.classList.add("incorrect");
+        });
+        if (index === item.correct) {
+          quizPoints += 10;
+          awardPoints(10);
+          $("quiz-feedback").className = "feedback success";
+          $("quiz-feedback").textContent = "¡Correcto! " + item.explain;
+        } else {
+          $("quiz-feedback").className = "feedback error";
+          $("quiz-feedback").textContent = "No exactamente. " + item.explain;
+        }
+        $("quiz-score").textContent = quizPoints + " puntos en este reto";
+        $("next-question").disabled = false;
+        $("next-question").textContent = quizIndex === quiz.length - 1 ? "Ver resultado final →" : "Siguiente pregunta →";
+      }
+      $("next-question").addEventListener("click", () => {
+        if (!answered) return;
+        if (quizIndex < quiz.length - 1) { quizIndex++; renderQuestion(); }
+        else {
+          $("quiz-question").textContent = "¡Reto completado!";
+          $("quiz-options").innerHTML = "";
+          $("quiz-feedback").className = "feedback success";
+          $("quiz-feedback").textContent = "Has conseguido " + quizPoints + " de " + (quiz.length * 10) + " puntos posibles. ¡Sigue explorando!";
+          $("quiz-progress").textContent = "Reto completado";
+          $("next-question").disabled = true;
+        }
+      });
+      $("restart-quiz").addEventListener("click", () => { quizIndex = 0; quizPoints = 0; renderQuestion(); });
+
+      function buildSequencer() {
+        $("sequencer").innerHTML = "";
+        instruments.forEach(instrument => {
+          const row = document.createElement("div"); row.className = "instrument-row";
+          const label = document.createElement("span"); label.className = "instrument-label"; label.textContent = instrument.label;
+          const steps = document.createElement("div"); steps.className = "steps";
+          for (let i = 0; i < 8; i++) {
+            const button = document.createElement("button");
+            button.type = "button"; button.className = "step";
+            button.setAttribute("aria-label", instrument.label + ", paso " + (i + 1));
+            button.setAttribute("aria-pressed", "false");
+            if (pattern[instrument.id].includes(i)) { button.classList.add("on"); button.setAttribute("aria-pressed", "true"); }
+            button.addEventListener("click", () => {
+              if (button.classList.contains("on")) { button.classList.remove("on"); button.setAttribute("aria-pressed", "false"); }
+              else { button.classList.add("on"); button.setAttribute("aria-pressed", "true"); }
+              makerSaved = false;
+            });
+            steps.appendChild(button);
+          }
+          row.append(label, steps); $("sequencer").appendChild(row);
+        });
+      }
+      $("tempo").addEventListener("input", event => $("tempo-value").textContent = event.target.value);
+      $("play-beat").addEventListener("click", () => {
+        stopPlayback();
+        const ctx = getAudio();
+        if (!ctx) { $("maker-feedback").textContent = "Tu navegador no permite generar audio. Prueba con un navegador actualizado."; return; }
+        const stepMs = 60000 / Number($("tempo").value) / 2;
+        const rows = [...$("sequencer").querySelectorAll(".instrument-row")];
+        const allButtons = [...$("sequencer").querySelectorAll(".step")];
+        let step = 0;
+        $("maker-feedback").textContent = "¡Está sonando tu creación!";
+        function tick() {
+          allButtons.forEach(button => button.classList.remove("playing"));
+          rows.forEach((row, rowIndex) => {
+            const button = row.querySelectorAll(".step")[step];
+            button.classList.add("playing");
+            if (button.classList.contains("on")) tone(instruments[rowIndex].type);
+          });
+          step = (step + 1) % 8;
+        }
+        tick();
+        playTimer = window.setInterval(tick, stepMs);
+        $("play-beat").disabled = true;
+      });
+      function stopPlayback() {
+        if (playTimer !== null) window.clearInterval(playTimer);
+        playTimer = null;
+        $("play-beat").disabled = false;
+        $("sequencer").querySelectorAll(".step").forEach(button => button.classList.remove("playing"));
+      }
+      $("stop-beat").addEventListener("click", () => { stopPlayback(); $("maker-feedback").textContent = "Reproducción detenida."; });
+      $("clear-beat").addEventListener("click", () => {
+        stopPlayback();
+        $("sequencer").querySelectorAll(".step").forEach(button => { button.classList.remove("on"); button.setAttribute("aria-pressed", "false"); });
+        makerSaved = false;
+        $("maker-feedback").textContent = "Patrón limpio. ¡Crea uno nuevo!";
+      });
+      $("save-beat").addEventListener("click", () => {
+        if (makerSaved) { $("maker-feedback").textContent = "Esta creación ya se ha puntuado. Cambia el patrón para volver a guardarlo."; return; }
+        const count = $("sequencer").querySelectorAll(".step.on").length;
+        if (!count) { $("maker-feedback").className = "feedback error"; $("maker-feedback").textContent = "Activa al menos una casilla antes de guardar."; return; }
+        makerSaved = true;
+        awardPoints(10);
+        $("maker-feedback").className = "feedback success";
+        $("maker-feedback").textContent = "¡Creación guardada! +10 puntos para tu equipo. Has activado " + count + " pasos.";
+      });
+      $("sequencer").addEventListener("click", event => {
+        if (event.target.matches(".step")) $("maker-feedback").className = "feedback";
+      });
+
+      updateScoreboard();
+      newPattern();
+      renderQuestion();
+      buildSequencer();
+    })();
+  </script>
+</body>
+</html>
