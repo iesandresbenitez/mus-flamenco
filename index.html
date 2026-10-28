@@ -418,7 +418,9 @@
       }
 
       function newPattern() {
-        beatPattern = [];\n        while (beatPattern.length < 4) { const candidate = Math.floor(Math.random() * 12); if (!beatPattern.includes(candidate)) beatPattern.push(candidate); }\n        beatPattern.sort((a, b) => a - b);
+        beatPattern = [];
+        while (beatPattern.length < 4) { const candidate = Math.floor(Math.random() * 12); if (!beatPattern.includes(candidate)) beatPattern.push(candidate); }
+        beatPattern.sort((a, b) => a - b);
         beatSelection.clear(); beatDone = false;
         $("pulse-grid").innerHTML = "";
         for (let i = 0; i < 12; i++) {
